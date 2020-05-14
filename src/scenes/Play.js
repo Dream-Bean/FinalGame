@@ -28,9 +28,6 @@ class Play extends Phaser.Scene {
         // colliders
         this.physics.add.collider(this.p1, this.p2);
 
-        this.actionTimer;
-        
-
     }
 
     update() {

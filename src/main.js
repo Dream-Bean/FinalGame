@@ -33,7 +33,6 @@ game.settings = {
     // movement triggers
     p1ActionAvailable: true, 
     p2ActionAvailable: true,
-    actionTimer: 0,
 }
 
 // reserve keyboard variables

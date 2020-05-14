@@ -1,3 +1,5 @@
+"use strict";
+
 // game configuration
 let config = {
     type: Phaser.CANVAS,
@@ -24,9 +26,14 @@ let game = new Phaser.Game(config);
 
 // define game settings
 game.settings = {
-    playerSelection: 1, // 1 = puffer, 2 = sword
+    playerSelection: 0, // 1 = puffer, 2 = sword
+    // movement speeds
     playerVelocity: 100,
-    playerDrag: 75,
+    playerDrag: 100,
+    // movement triggers
+    p1ActionAvailable: true, 
+    p2ActionAvailable: true,
+    actionTimer: 0,
 }
 
 // reserve keyboard variables

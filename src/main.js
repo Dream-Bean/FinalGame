@@ -3,8 +3,8 @@
 // game configuration
 let config = {
     type: Phaser.CANVAS,
-    width: 1280,
-    height: 720,
+    width: 1024,
+    height: 512,
     physics: {
         default: "arcade",
         arcade: {
@@ -20,7 +20,7 @@ let config = {
         forceSetTimeOut: true,
     },
     pixelArt: true,
-    scene: [Play],
+    scene: [Menu, Play],
 }
 let game = new Phaser.Game(config);
 
@@ -36,4 +36,4 @@ game.settings = {
 }
 
 // reserve keyboard variables
-let key1, key2, keyUP, keyDOWN, keyLEFT, keyRIGHT;
+let key1, key2, keyUP, keyDOWN, keyLEFT, keyRIGHT, keyR, keySPACE;

@@ -3,8 +3,8 @@
 // game configuration
 let config = {
     type: Phaser.CANVAS,
-    width: 1024,
-    height: 512,
+    width: 1280,
+    height: 720,
     physics: {
         default: "arcade",
         arcade: {
@@ -20,7 +20,7 @@ let config = {
         forceSetTimeOut: true,
     },
     pixelArt: true,
-    scene: [Menu, Play],
+    scene: [Menu, Start, Second],
 }
 let game = new Phaser.Game(config);
 

@@ -4,7 +4,6 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('pufferfish', './assets/puffer.png'); //26w 30h
 
 
     }
@@ -18,7 +17,7 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.scene.start("playScene");
+            this.scene.start("startScene");
         }
     }
 }

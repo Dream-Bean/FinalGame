@@ -26,14 +26,10 @@ let game = new Phaser.Game(config);
 
 // define game settings
 game.settings = {
-    playerSelection: 0, // 1 = puffer, 2 = sword
     // movement speeds
-    playerVelocity: 100,
-    playerDrag: 100,
-    // movement triggers
-    p1ActionAvailable: true, 
-    p2ActionAvailable: true,
+    playerVelocityY: 50,
+    playerVelocityX: 100,
 }
 
 // reserve keyboard variables
-let key1, key2, keyUP, keyDOWN, keyLEFT, keyRIGHT, keyR, keySPACE;
+let keyQ, keyE, keySPACE, keyR;

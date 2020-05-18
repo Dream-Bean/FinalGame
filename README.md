@@ -10,3 +10,7 @@ Commit #3: Basic movement works, but I need to tune in when tiles are implemente
 
 Commit #4: Implemented a basic tilemap for the game. Using temp assets from a
             phaser3 tutorial on youtube.
+
+Commit #5: Implemented massive overhaul of the game in responsive to shifting our
+            design of the game. Using new art assets, and implementing the prefabs
+            and physics of the game as well as basic world building.

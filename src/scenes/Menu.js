@@ -5,7 +5,6 @@ class Menu extends Phaser.Scene {
 
     preload() {
         this.load.image('pufferfish', './assets/puffer.png'); //26w 30h
-        this.load.image('swordfish', './assets/sword.png'); //20w 33h
 
 
     }

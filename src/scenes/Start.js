@@ -48,6 +48,7 @@ class Start extends Phaser.Scene {
         this.e1 = new Enemy(this, 700, 400, 'skeleton').setScale(1);
         this.p1 = new Player(this, 500, 400, 'puffer').setScale(1);
 
+
         // colliders
         //this.physics.add.collider(this.p1, this.p2);
         //this.physics.add.collider(this.p1, topLayer);
@@ -68,6 +69,9 @@ class Start extends Phaser.Scene {
 
         
         // if r pressed restart scene
+        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+            this.scene.start("secondScene");
+        }
     }
 
     // helper functions:

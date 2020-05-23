@@ -52,8 +52,8 @@ class Start extends Phaser.Scene {
        // this.b3 = new Border(this, 15, 15, 'tempWall').setScale(1, 50);
         //this.b4 = new Border(this, 1265, 15, 'tempWall').setScale(1, 50);
         //this.b4 = new Border(this, 1265, 15, 'tempWall').setScale(1, 50);
-        this.e1 = new Enemy(this, 800, 400, 'skeleton').setScale(1);
-        this.p1 = new Player(this, 600, 400, 'puffer').setScale(2);
+        this.t1 = new Turret(this, 800, 400, 'skeleton').setScale(1);
+        this.p1 = new Player(this, 600, 400, 'puffer').setScale(1);
 
 
         // colliders

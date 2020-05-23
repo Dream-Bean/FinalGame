@@ -28,8 +28,8 @@ class Second extends Phaser.Scene {
         this.bubble1 = new Border(this, 450, 50, 'bubble').setScale(1);
         this.bubble2 = new Border(this, 450, 150, 'bubble').setScale(2);
 
-        this.e1 = new Enemy(this, 550, 50, 'skeleton').setScale(1);
-        this.e2 = new Enemy(this, 550, 150, 'skeleton').setScale(2);
+        //this.e1 = new Enemy(this, 550, 50, 'skeleton').setScale(1);
+        //this.e2 = new Enemy(this, 550, 150, 'skeleton').setScale(2);
         this.p1 = new Player(this, 650, 50, 'puffer').setScale(1);
         this.p2 = new Player(this, 650, 150, 'puffer').setScale(2);
 

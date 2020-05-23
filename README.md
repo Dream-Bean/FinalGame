@@ -19,3 +19,5 @@ Commit #6: Implemented scene transition based on player hitting the endpoint of 
             map. Also added sound, and touched up borders.
 
 Commit #7: Added a tilemap and incorporated collision checking.
+
+Commit #8: fixed up some prefabs and assets.

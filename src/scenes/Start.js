@@ -13,7 +13,7 @@ class Start extends Phaser.Scene {
         this.load.audio('bgmusic', './assets/bgmusic.mp3');
         
         this.load.image("terrain", "./assets/terrain_atlas.png");
-        this.load.tilemapTiledJSON("map", "./assets/level1.json");
+        this.load.tilemapTiledJSON("map", "./assets/newlevel1.json");
 
 
     }
@@ -29,13 +29,8 @@ class Start extends Phaser.Scene {
         let botLayer = map.createStaticLayer("background", [terrain], 0, 0); //.setDepth(-1);
         let topLayer = map.createStaticLayer("borders", [terrain], 0, 0);
         
-
         // set camera bounds
         //this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-
-        this.portal = new Portal(this, 1025, -10).setScale(8, 1);
-        //this.b2 = new Border(this, 0, 655).setScale(80, 1);
-        //this.bgArt = this.add.tileSprite(0, 0, 0, 0, 'lvl1').setScale(2).setOrigin(0);
 
         // define hotkeys
         keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
@@ -46,26 +41,13 @@ class Start extends Phaser.Scene {
         this.music = this.sound.add('bgmusic');
         this.music.play({ volume: 0.2, loop: -1 });
 
-        
-        //this.b1 = new Border(this, 0, 15, 'tempWall').setScale(65, 1);
-        
-       // this.b3 = new Border(this, 15, 15, 'tempWall').setScale(1, 50);
-        //this.b4 = new Border(this, 1265, 15, 'tempWall').setScale(1, 50);
-        //this.b4 = new Border(this, 1265, 15, 'tempWall').setScale(1, 50);
-        this.t1 = new Turret(this, 800, 400, 'skeleton').setScale(1);
-        this.p1 = new Player(this, 600, 400, 'puffer').setScale(1);
 
+        this.portal = new Portal(this, 1115, -10).setScale(6, 1);
+        this.p1 = new Player(this, 120, 610, 'puffer').setScale(1);
 
         // colliders
-        //this.physics.add.collider(this.p1, this.p2);
-        //this.physics.add.collider(this.p1, topLayer);
-        this.physics.add.collider(this.p1, this.e1);
         topLayer.setCollisionByProperty({ collides: true });
         this.physics.add.collider(this.p1, topLayer)
-        //this.physics.add.collider(this.p1, this.b1);
-        //this.physics.add.collider(this.p1, this.b2);
-       // this.physics.add.collider(this.p1, this.b3);
-        //this.physics.add.collider(this.p1, this.b4);
 
     }
 
@@ -78,9 +60,9 @@ class Start extends Phaser.Scene {
 
         
         // if r pressed restart scene
-        if (Phaser.Input.Keyboard.JustDown(keyR)) {
-            this.scene.start("secondScene");
-        }
+        //if (Phaser.Input.Keyboard.JustDown(keyR)) {
+        //    this.scene.start("secondScene");
+        //}
     }
 
     // helper functions:

@@ -27,8 +27,8 @@ let game = new Phaser.Game(config);
 // define game settings
 game.settings = {
     // movement speeds
-    playerVelocityY: 50,
-    playerVelocityX: 100,
+    playerVelocityY: 100,
+    playerVelocityX: 150,
 }
 
 // reserve keyboard variables

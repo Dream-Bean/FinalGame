@@ -17,3 +17,5 @@ Commit #5: Implemented massive overhaul of the game in responsive to shifting ou
 
 Commit #6: Implemented scene transition based on player hitting the endpoint of the
             map. Also added sound, and touched up borders.
+
+Commit #7: Added a tilemap and incorporated collision checking.

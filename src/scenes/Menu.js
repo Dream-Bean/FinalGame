@@ -15,6 +15,7 @@ class Menu extends Phaser.Scene {
         this.load.image("terrain", "./assets/terrain_atlas.png");
         this.load.tilemapTiledJSON("map1", "./assets/level1.json");
         this.load.tilemapTiledJSON("map2", "./assets/level2.json");
+        this.load.tilemapTiledJSON("map3", "./assets/level3.json");
 
 
 

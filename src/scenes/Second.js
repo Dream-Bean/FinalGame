@@ -14,24 +14,23 @@ class Second extends Phaser.Scene {
         let terrain = map.addTilesetImage("terrain_atlas", "terrain");
 
         //layers
-        let bgLayer = map.createStaticLayer("background", [terrain], 0, 0); //.setDepth(-1);
-        let topLayer = map.createStaticLayer("borders", [terrain], 0, 0);
-        let deathLayer = map.createStaticLayer("spikes", [terrain], 0, 0);
+        let airLayer = map.createStaticLayer("air", [terrain], 0, 0); //.setDepth(-1);
+        let wallLayer = map.createStaticLayer("walls", [terrain], 0, 0);
         
 
         this.portal = new Portal(this, 160, -10).setScale(6, 1);
-        this.p1 = new Player(this, 1180, 630, 'puffer').setScale(1);
+        this.p1 = new Player(this, 1140, 650, 'puffer').setScale(1);
 
         // colliders
-        topLayer.setCollisionByProperty({ collides: true });
-        this.physics.add.collider(this.p1, topLayer)
+        wallLayer.setCollisionByProperty({ collides: true });
+        this.physics.add.collider(this.p1, wallLayer)
 
-        topLayer.setCollisionByProperty({ collides: true });
-        //topLayer.setCollisionByProperty({ kills: true });
-        this.physics.add.collider(this.p1, topLayer)
-        //deathLayer.setTileIndexCallback([3, 4, 5], ()=>{
-        //    console.log("pls");
-        //});
+        // spikes kill player
+        wallLayer.setTileIndexCallback([4, 5, 6], () => {
+            this.p1.alpha = 0;
+            //set game over
+        });
+
     }
 
     update() {
@@ -39,10 +38,11 @@ class Second extends Phaser.Scene {
             this.scene.start("thirdScene");
         }
 
-        //this.physics.overlap(this.p1, this.deathLayer({kills}), this.p1.destroy(), null, this);
-
         this.p1.update();
     }
 
+    msg() {
+        console.log("pog");
+    }
 
 }

@@ -10,6 +10,8 @@ class First extends Phaser.Scene {
         keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+        keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
 
         // add a tile map
         let map = this.add.tilemap("map1");
@@ -20,7 +22,7 @@ class First extends Phaser.Scene {
         let topLayer = map.createStaticLayer("borders", [terrain], 0, 0);
         
         // set camera bounds
-        //this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+        //this.cameras.main.setBounds(0, 0, 200, 200);
 
         // Play music
         this.music = this.sound.add('bgmusic');
@@ -37,6 +39,10 @@ class First extends Phaser.Scene {
         this.portal = new Portal(this, 1115, -10).setScale(6, 1);
         this.p1 = new Player(this, 120, 610, 'puffer').setScale(1);
 
+        // set camera bounds
+        //this.cameras.main.setBounds(0, 0, 200, 200);
+        this.cameras.main.startFollow(this.p1);
+
         // colliders
         topLayer.setCollisionByProperty({ collides: true });
         this.physics.add.collider(this.p1, topLayer)
@@ -52,8 +58,11 @@ class First extends Phaser.Scene {
 
         
         // if r pressed restart scene
-        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+        if (Phaser.Input.Keyboard.JustDown(keyONE)) {
             this.scene.start("secondScene");
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyTWO)) {
+            this.scene.start("thirdScene");
         }
     }
 

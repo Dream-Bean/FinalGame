@@ -25,3 +25,7 @@ Commit #8: Fixed up some prefabs and assets.
 Commit #9: Organized better. Added animation. Edited levels and the interaction
             between the player with them. Still working on the kill one between
             spikes and a player.
+
+Commit #10: Spikes work now. Need to add an endgame and restart to scenes. Make 
+            level3 the patrol level. Level4 will be for the turrets. Testing out
+            new camera on level1.

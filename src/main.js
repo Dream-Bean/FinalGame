@@ -20,7 +20,7 @@ let config = {
         forceSetTimeOut: true,
     },
     pixelArt: true,
-    scene: [Menu, Start, Second],
+    scene: [Menu, First, Second, Third],
 }
 let game = new Phaser.Game(config);
 

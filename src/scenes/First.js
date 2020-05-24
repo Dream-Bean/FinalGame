@@ -1,28 +1,18 @@
-class Start extends Phaser.Scene {
+class First extends Phaser.Scene {
     constructor() {
-        super("startScene");
-    }
-
-    preload() {
-        this.load.image('puffer', './assets/pufferfish.png');
-        this.load.image('skeleton', './assets/skeletonfish.png');
-        this.load.image('tempWall', './assets/SeaFloorTop.png');
-        this.load.image('tempPortal', './assets/SeaFloorBottom.png');
-        this.load.image('lvl1', './assets/lvl1.png');
-
-        this.load.audio('bgmusic', './assets/bgmusic.mp3');
-        
-        this.load.image("terrain", "./assets/terrain_atlas.png");
-        this.load.tilemapTiledJSON("map", "./assets/newlevel1.json");
-
-
+        super("firstScene");
     }
 
     create() {
         //this.cameras.main.setBackgroundColor("#FFFF00");
 
+        // define hotkeys
+        keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
         // add a tile map
-        let map = this.add.tilemap("map");
+        let map = this.add.tilemap("map1");
         let terrain = map.addTilesetImage("terrain_atlas", "terrain");
         
         //layers
@@ -32,15 +22,17 @@ class Start extends Phaser.Scene {
         // set camera bounds
         //this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
-        // define hotkeys
-        keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
-        keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-
         // Play music
         this.music = this.sound.add('bgmusic');
         this.music.play({ volume: 0.2, loop: -1 });
 
+        // Player animations
+        this.anims.create({
+            key: 'puffup',
+            frames: this.anims.generateFrameNumbers('puffanim', { start: 0, end: 7, first: 0 }),
+            frameRate: 12,
+            repeat: 0,
+        });
 
         this.portal = new Portal(this, 1115, -10).setScale(6, 1);
         this.p1 = new Player(this, 120, 610, 'puffer').setScale(1);
@@ -60,9 +52,9 @@ class Start extends Phaser.Scene {
 
         
         // if r pressed restart scene
-        //if (Phaser.Input.Keyboard.JustDown(keyR)) {
-        //    this.scene.start("secondScene");
-        //}
+        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+            this.scene.start("secondScene");
+        }
     }
 
     // helper functions:

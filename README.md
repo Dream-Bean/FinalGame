@@ -20,4 +20,8 @@ Commit #6: Implemented scene transition based on player hitting the endpoint of 
 
 Commit #7: Added a tilemap and incorporated collision checking.
 
-Commit #8: fixed up some prefabs and assets.
+Commit #8: Fixed up some prefabs and assets.
+
+Commit #9: Organized better. Added animation. Edited levels and the interaction
+            between the player with them. Still working on the kill one between
+            spikes and a player.

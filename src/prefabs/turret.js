@@ -4,15 +4,9 @@ class Turret extends Phaser.Physics.Arcade.Sprite {
 
         // physics conditions
         scene.physics.add.existing(this);
-        this.setImmovable(true);
         this.setDebug(true, true, 0xFACADE);
-
-
+        this.setImmovable(true);
+        
         scene.add.existing(this);
     }
-
-    update() {
-
-    }
-
 }

@@ -4,15 +4,8 @@ class Bubble extends Phaser.Physics.Arcade.Sprite {
 
         // physics conditions
         scene.physics.add.existing(this);
-        this.setImmovable(true);
         this.setDebug(true, true, 0xFACADE);
-
 
         scene.add.existing(this);
     }
-
-    update() {
-
-    }
-
 }

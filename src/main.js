@@ -29,6 +29,7 @@ game.settings = {
     // movement speeds
     playerVelocityY: 100,
     playerVelocityX: 150,
+    isBubbleTimer: false,
 }
 
 // reserve keyboard variables

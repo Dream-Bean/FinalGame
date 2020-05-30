@@ -17,7 +17,6 @@ class Second extends Phaser.Scene {
         let airLayer = map.createStaticLayer("air", [terrain], 0, 0); //.setDepth(-1);
         let wallLayer = map.createStaticLayer("walls", [terrain], 0, 0);
         
-
         this.portal = new Portal(this, 160, -10).setScale(6, 1);
         this.p1 = new Player(this, 1140, 650, 'puffer').setScale(1);
 
@@ -26,7 +25,7 @@ class Second extends Phaser.Scene {
         this.physics.add.collider(this.p1, wallLayer)
 
         // spikes kill player
-        wallLayer.setTileIndexCallback([4, 5, 6], () => {
+        wallLayer.setTileIndexCallback([3, 4, 5], () => { //456?
             this.p1.alpha = 0;
             //set game over
         });

@@ -29,3 +29,5 @@ Commit #9: Organized better. Added animation. Edited levels and the interaction
 Commit #10: Spikes work now. Need to add an endgame and restart to scenes. Make 
             level3 the patrol level. Level4 will be for the turrets. Testing out
             new camera on level1.
+
+Commit #11: Implemented the turret animation and ability to shoot. Need to edit both.

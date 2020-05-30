@@ -28,13 +28,7 @@ class First extends Phaser.Scene {
         this.music = this.sound.add('bgmusic');
         this.music.play({ volume: 0.2, loop: -1 });
 
-        // Player animations
-        this.anims.create({
-            key: 'puffup',
-            frames: this.anims.generateFrameNumbers('puffanim', { start: 0, end: 7, first: 0 }),
-            frameRate: 12,
-            repeat: 0,
-        });
+        
 
         this.portal = new Portal(this, 1115, -10).setScale(6, 1);
         this.p1 = new Player(this, 120, 610, 'puffer').setScale(1);

@@ -38,3 +38,6 @@ Commit #12: Created a new level, and am rebuilding many of the mechanics around 
 
 Commit #13: Made two basic levels that will be edited. Add turrets to level 2, and
             am touching up their functionality. Have to fix the reset feature on them.
+
+Commit #14: Core game is now complete. Just need to touch up speeds/variables/sizes,
+            and edit levels and make new ones. Also polish ofc.

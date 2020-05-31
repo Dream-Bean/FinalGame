@@ -5,7 +5,7 @@ class Menu extends Phaser.Scene {
 
     preload() {
         this.load.image('puffer', './assets/pufferfish.png');
-        this.load.image('skeleton', './assets/skeletonfish.png');
+        this.load.image('undead', './assets/undead_fish.png');
         this.load.image('bubble', './assets/bubble.png');
 
         this.load.spritesheet('puffanim', './assets/puff_spritesheet.png', { frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 4 });
@@ -41,14 +41,14 @@ class Menu extends Phaser.Scene {
         this.anims.create({
             key: 'skeleblast',
             frames: this.anims.generateFrameNumbers('blastanim', { start: 0, end: 7, first: 0 }),
-            frameRate: 21,
+            frameRate: 18,
             repeat: 0,
         });
 
         // Play music
         this.music = this.sound.add('bgmusic');
         this.music.play({ volume: 0.2, loop: -1 });
-        
+
     }
 
     update() {

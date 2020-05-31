@@ -17,18 +17,20 @@ class Second extends Phaser.Scene {
         this.wpBot = this.add.tileSprite(0, 0, 1280, 704, 'img1').setOrigin(0);
         this.wpTop = this.add.tileSprite(0, 0, 1280, 704, 'img2').setOrigin(0);
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
+        let extraLayer = map.createStaticLayer("extra", [terrain], 0, 0);
+
 
         this.p1 = new Player(this, 760, 650, 'puffer').setScale(1);
-        this.t1 = new Turret(this, 250, 425, 'skeleton').setScale(1).setFlipX(true);
-        this.t2 = new Turret(this, 250, 525, 'skeleton').setScale(1).setFlipX(true);
-        this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1).setAlpha(0);
-        this.blast2 = new Bubble(this, this.t2.x, this.t2.y, 'bubble').setScale(1).setAlpha(0);
+        this.t1 = new Turret(this, 250, 425, 'undead').setScale(1).setFlipX(true).setDepth(1);
+        this.t2 = new Turret(this, 250, 525, 'undead').setScale(1).setFlipX(true).setDepth(1);
+        this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1);
+        this.blast2 = new Bubble(this, this.t2.x, this.t2.y, 'bubble').setScale(1);
 
         // colliders
         topLayer.setCollisionByProperty({ collides: true });
-        this.physics.add.collider(this.p1, topLayer)
-        this.physics.add.collider(this.blast1, topLayer)
-        this.physics.add.collider(this.blast2, topLayer)
+        this.physics.add.collider(this.p1, topLayer);
+        this.physics.add.collider(this.blast1, topLayer);
+        this.physics.add.collider(this.blast2, topLayer);
 
         // spikes kill player
         topLayer.setTileIndexCallback([6, 7, 8], () => {
@@ -36,6 +38,17 @@ class Second extends Phaser.Scene {
             game.settings.gameOver = true; //switch to true
             //set game over
         });
+
+        /*
+        extraLayer.setCollisionByProperty({ collides: true});
+        this.physics.add.collider(this.blast1, extraLayer);
+        this.physics.add.collider(this.blast2, extraLayer);
+        topLayer.setTileIndexCallback([1, 2, 3, 4, 6, 7, 8, 11, 12, 13, ], () => {
+            this.p1.setAlpha(0);
+            game.settings.gameOver = true; //switch to true
+            //set game over
+        });
+        */
 
         //this.blast1.onCollide.add(this.reset(this.t1, this.blast1), this); //fix these monka
         //this.blast2.onCollide.add(this.reset(this.t2, this.blast2), this);
@@ -68,26 +81,23 @@ class Second extends Phaser.Scene {
             this.p1.setAlpha(0);
             game.settings.gameOver = true;
         }
-        this.fire(this.t1, this.blast1, game.settings.isBubbleTimer1);
-        this.fire(this.t2, this.blast2, game.settings.isBubbleTimer2);
+
+        if (this.blast1.body.velocity.x == 0) {
+            this.reload(this.t1, this.blast1);
+        }
+        if (this.blast2.body.velocity.x == 0) {
+            this.reload(this.t2, this.blast2);
+        }
 
         this.p1.update();
+        //console.log(this.blast1.body.velocity.x);
     }
 
-    // Fire bubbles from skeleton fish
-    fire(turret, bubble, timerNumber) {
-        if (timerNumber == false) { // works here.
-            timerNumber = true;
-            this.bubbleTimer = this.time.delayedCall(5000, () => {
-                turret.anims.play('skeleblast');
-                timerNumber = false;
-                bubble.setVelocityX(100);
-                bubble.setAlpha(1);
-            }, null, this);
-        }
-    }
-    reset(turret, bubble) {
+
+    reload(turret, bubble) {
         bubble.x = turret.x;
         bubble.y = turret.y;
+        bubble.setVelocityX(100);
+        turret.anims.play('skeleblast');
     }
 }

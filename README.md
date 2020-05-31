@@ -31,3 +31,7 @@ Commit #10: Spikes work now. Need to add an endgame and restart to scenes. Make
             new camera on level1.
 
 Commit #11: Implemented the turret animation and ability to shoot. Need to edit both.
+
+Commit #12: Created a new level, and am rebuilding many of the mechanics around it
+            and the new tileset I have now. Cleaning up some of the extra files and
+            unneeded code too.

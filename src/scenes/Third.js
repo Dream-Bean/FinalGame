@@ -14,8 +14,7 @@ class Third extends Phaser.Scene {
         let terrain = map.addTilesetImage("terrain_atlas", "terrain");
 
         // layers
-        let botLayer = map.createStaticLayer("air", [terrain], 0, 0); //.setDepth(-1);
-        let topLayer = map.createStaticLayer("walls", [terrain], 0, 0);
+        let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
         this.p1 = new Player(this, 380, 630, 'puffer').setScale(1); // x=180
         this.t1 = new Turret(this, 650, 620, 'skeleton').setScale(1);

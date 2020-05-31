@@ -13,8 +13,10 @@ class Menu extends Phaser.Scene {
 
         this.load.audio('bgmusic', './assets/bgmusic.mp3');
 
+        this.load.image('img1', './assets/img1.png');
+        this.load.image('img2', './assets/img2.png');
         this.load.image("terrain", "./assets/terrain_atlas.png");
-        this.load.tilemapTiledJSON("map1", "./assets/level1.json");
+        this.load.tilemapTiledJSON("map1", "./assets/lvl1.json");
         this.load.tilemapTiledJSON("map2", "./assets/level2.json");
         this.load.tilemapTiledJSON("map3", "./assets/level3.json");
 

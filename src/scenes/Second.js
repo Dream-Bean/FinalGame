@@ -14,34 +14,80 @@ class Second extends Phaser.Scene {
         let terrain = map.addTilesetImage("terrain_atlas", "terrain");
 
         //layers
-        let airLayer = map.createStaticLayer("air", [terrain], 0, 0); //.setDepth(-1);
-        let wallLayer = map.createStaticLayer("walls", [terrain], 0, 0);
-        
-        this.portal = new Portal(this, 160, -10).setScale(6, 1);
-        this.p1 = new Player(this, 1140, 650, 'puffer').setScale(1);
+        this.wpBot = this.add.tileSprite(0, 0, 1280, 704, 'img1').setOrigin(0);
+        this.wpTop = this.add.tileSprite(0, 0, 1280, 704, 'img2').setOrigin(0);
+        let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
+
+        this.p1 = new Player(this, 760, 650, 'puffer').setScale(1);
+        this.t1 = new Turret(this, 250, 425, 'skeleton').setScale(1).setFlipX(true);
+        this.t2 = new Turret(this, 250, 525, 'skeleton').setScale(1).setFlipX(true);
+        this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1).setAlpha(0);
+        this.blast2 = new Bubble(this, this.t2.x, this.t2.y, 'bubble').setScale(1).setAlpha(0);
 
         // colliders
-        wallLayer.setCollisionByProperty({ collides: true });
-        this.physics.add.collider(this.p1, wallLayer)
+        topLayer.setCollisionByProperty({ collides: true });
+        this.physics.add.collider(this.p1, topLayer)
+        this.physics.add.collider(this.blast1, topLayer)
+        this.physics.add.collider(this.blast2, topLayer)
 
         // spikes kill player
-        wallLayer.setTileIndexCallback([3, 4, 5], () => { //456?
-            this.p1.alpha = 0;
+        topLayer.setTileIndexCallback([6, 7, 8], () => {
+            this.p1.setAlpha(0);
+            game.settings.gameOver = true; //switch to true
             //set game over
         });
+
+        //this.blast1.onCollide.add(this.reset(this.t1, this.blast1), this); //fix these monka
+        //this.blast2.onCollide.add(this.reset(this.t2, this.blast2), this);
+
+        topLayer.setTileIndexCallback([25], () => {
+            this.scene.start("thirdScene");
+        });
+
+        this.gameText = this.add.text(game.config.width / 2, game.config.height / 2, "Press R to Restart").setScale(2).setOrigin(0.5);
+        this.gameText.setVisible(false);
 
     }
 
     update() {
-        if (this.physics.overlap(this.p1, this.portal)) {
-            this.scene.start("thirdScene");
+        if (game.settings.gameOver == true) {
+            this.gameText.setVisible(true);
+            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                game.settings.gameOver = false;
+                this.gameText.setVisible(false);
+                this.scene.restart();
+            }
         }
+
+        if (this.physics.overlap(this.p1, this.blast1)) {
+            this.p1.setAlpha(0);
+            game.settings.gameOver = true;
+            
+        }
+        if (this.physics.overlap(this.p1, this.blast2)) {
+            this.p1.setAlpha(0);
+            game.settings.gameOver = true;
+        }
+        this.fire(this.t1, this.blast1, game.settings.isBubbleTimer1);
+        this.fire(this.t2, this.blast2, game.settings.isBubbleTimer2);
 
         this.p1.update();
     }
 
-    msg() {
-        console.log("pog");
+    // Fire bubbles from skeleton fish
+    fire(turret, bubble, timerNumber) {
+        if (timerNumber == false) { // works here.
+            timerNumber = true;
+            this.bubbleTimer = this.time.delayedCall(5000, () => {
+                turret.anims.play('skeleblast');
+                timerNumber = false;
+                bubble.setVelocityX(100);
+                bubble.setAlpha(1);
+            }, null, this);
+        }
     }
-
+    reset(turret, bubble) {
+        bubble.x = turret.x;
+        bubble.y = turret.y;
+    }
 }

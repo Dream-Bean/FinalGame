@@ -6,8 +6,6 @@ class First extends Phaser.Scene {
     create() {
         //this.cameras.main.setBackgroundColor("#FFFF00");
 
-        
-
         // define hotkeys
         keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
@@ -26,10 +24,6 @@ class First extends Phaser.Scene {
         
         // set camera bounds
         //this.cameras.main.setBounds(0, 0, 200, 200);
-
-        // Play music
-        this.music = this.sound.add('bgmusic');
-        this.music.play({ volume: 0.2, loop: -1 });
 
         
         this.p1 = new Player(this, 120, 610, 'puffer').setScale(1);
@@ -53,20 +47,26 @@ class First extends Phaser.Scene {
             this.scene.start("secondScene");
         });
 
+        this.gameText = this.add.text(game.config.width / 2, game.config.height / 2, "Press R to Restart").setScale(2).setOrigin(0.5);
+        this.gameText.setVisible(false);
+
     }
 
     update() {
         if (game.settings.gameOver == true) {
+            this.gameText.setVisible(true);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
-                this.scene.start("firstScene");
+                game.settings.gameOver = false;
+                this.gameText.setVisible(false);
+                this.scene.restart();
             }
         }
 
-        if (this.physics.overlap(this.p1, this.portal)) {
+        this.p1.update();
+
+        if (Phaser.Input.Keyboard.JustDown(keyONE)) {
             this.scene.start("secondScene");
         }
-
-        this.p1.update();
 
     }
 

@@ -25,7 +25,8 @@ class Third extends Phaser.Scene {
         // colliders
         topLayer.setCollisionByProperty({ collides: true });
         this.physics.add.collider(this.p1, topLayer)
-        this.physics.add.collider(this.blast, topLayer)
+        this.physics.add.collider(this.blast1, topLayer)
+        this.physics.add.collider(this.blast2, topLayer)
 
         /*
         topLayer.setTileIndexCallback([1], () => {

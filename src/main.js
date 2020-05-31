@@ -4,7 +4,7 @@
 let config = {
     type: Phaser.CANVAS,
     width: 1280,
-    height: 720,
+    height: 704,
     physics: {
         default: "arcade",
         arcade: {
@@ -29,7 +29,8 @@ game.settings = {
     // movement speeds
     playerVelocityY: 100,
     playerVelocityX: 150,
-    isBubbleTimer: false,
+    isBubbleTimer1: false,
+    isBubbleTimer2: false,
     gameOver: false,
 }
 

@@ -5,8 +5,8 @@ class Second extends Phaser.Scene {
 
     create() {
         // define hotkeys
-        keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
-        keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         // add a tile map
@@ -14,13 +14,15 @@ class Second extends Phaser.Scene {
         let terrain = map.addTilesetImage("terrain_atlas", "terrain");
 
         //layers
-        this.wpBot = this.add.tileSprite(0, 0, 1280, 704, 'img1').setOrigin(0);
-        this.wpTop = this.add.tileSprite(0, 0, 1280, 704, 'img2').setOrigin(0);
+        this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img1').setOrigin(0).setScrollFactor(0);
+        this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img2').setOrigin(0).setScrollFactor(0);
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
         let extraLayer = map.createStaticLayer("extra", [terrain], 0, 0);
 
 
         this.p1 = new Player(this, 760, 650, 'puffer').setScale(1);
+        this.cameras.main.startFollow(this.p1);
+
         this.t1 = new Turret(this, 250, 425, 'undead').setScale(1).setFlipX(true).setDepth(1);
         this.t2 = new Turret(this, 250, 525, 'undead').setScale(1).setFlipX(true).setDepth(1);
         this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1);
@@ -63,6 +65,9 @@ class Second extends Phaser.Scene {
     }
 
     update() {
+        this.wpBot.tilePositionX = this.cameras.main.scrollX * 0.3;
+        this.wpTop.tilePositionX = this.cameras.main.scrollX * 0.5;
+
         if (game.settings.gameOver == true) {
             this.gameText.setVisible(true);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {

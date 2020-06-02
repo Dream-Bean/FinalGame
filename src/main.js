@@ -35,4 +35,4 @@ game.settings = {
 }
 
 // reserve keyboard variables
-let keyQ, keyE, keySPACE, keyR, keyONE, keyTWO;
+let keyA, keyD, keySPACE, keyR, keyONE, keyTWO;

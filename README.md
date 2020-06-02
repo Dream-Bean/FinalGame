@@ -41,3 +41,6 @@ Commit #13: Made two basic levels that will be edited. Add turrets to level 2, a
 
 Commit #14: Core game is now complete. Just need to touch up speeds/variables/sizes,
             and edit levels and make new ones. Also polish ofc.
+
+Commit #15: Implemented parallax scrolling and camera movement. Need to resize game.
+            Also need to edit the added sounds.

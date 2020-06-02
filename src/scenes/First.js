@@ -7,8 +7,8 @@ class First extends Phaser.Scene {
         //this.cameras.main.setBackgroundColor("#FFFF00");
 
         // define hotkeys
-        keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
-        keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
         keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
@@ -18,8 +18,8 @@ class First extends Phaser.Scene {
         let terrain = map.addTilesetImage("terrain_atlas", "terrain");
         
         //layers
-        this.wpBot = this.add.tileSprite(0, 0, 1280, 704, 'img1').setOrigin(0);
-        this.wpTop = this.add.tileSprite(0, 0, 1280, 704, 'img2').setOrigin(0);
+        this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img1').setOrigin(0).setScrollFactor(0);
+        this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img2').setOrigin(0).setScrollFactor(0);
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
         
         // set camera bounds
@@ -27,6 +27,7 @@ class First extends Phaser.Scene {
 
         
         this.p1 = new Player(this, 120, 610, 'puffer').setScale(1);
+        this.cameras.main.startFollow(this.p1);
 
         // set camera bounds
         //this.cameras.main.setBounds(0, 0, 200, 200);
@@ -39,8 +40,8 @@ class First extends Phaser.Scene {
         // spikes kill player
         topLayer.setTileIndexCallback([6, 7, 8], () => {
             this.p1.setAlpha(0);
-            game.settings.gameOver = true; //switch to true
-            //set game over
+            game.settings.gameOver = true;
+            this.sound.play('deathSound', { volume: 0.2 });
         });
 
         topLayer.setTileIndexCallback([25], () => {
@@ -53,6 +54,11 @@ class First extends Phaser.Scene {
     }
 
     update() {
+        this.wpBot.tilePositionX = this.cameras.main.scrollX * 0.3;
+        this.wpBot.tilePositionX = this.cameras.main.scrollY * 0.3;
+        this.wpTop.tilePositionX = this.cameras.main.scrollX * 0.5;
+        this.wpTop.tilePositionX = this.cameras.main.scrollY * 0.5;
+
         if (game.settings.gameOver == true) {
             this.gameText.setVisible(true);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {

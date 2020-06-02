@@ -14,12 +14,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         // player motion
-        if (Phaser.Input.Keyboard.JustDown(keyQ)) {
+        if (Phaser.Input.Keyboard.JustDown(keyA)) {
             this.setVelocityY(-game.settings.playerVelocityY);
             this.setVelocityX(-game.settings.playerVelocityX);
             this.setFlipX(true);
             this.anims.play('puffup');
-        } else if (Phaser.Input.Keyboard.JustDown(keyE)) {
+        } else if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.setVelocityY(-game.settings.playerVelocityY);
             this.setVelocityX(game.settings.playerVelocityX);
             this.setFlipX(false);

@@ -5,7 +5,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // physics conditions
         scene.physics.add.existing(this);
         //this.setCollideWorldBounds(true);
-        this.setGravity(0, 200);
+        this.setGravity(0, 250);
         this.setDragX(50);
         this.setDebug(true, true, 0xFACADE);
 
@@ -19,11 +19,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(-game.settings.playerVelocityX);
             this.setFlipX(true);
             this.anims.play('puffup');
+            game.settings.puffSoundTrigger = true;
         } else if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.setVelocityY(-game.settings.playerVelocityY);
             this.setVelocityX(game.settings.playerVelocityX);
             this.setFlipX(false);
             this.anims.play('puffup');
+            game.settings.puffSoundTrigger = true;
+        } else {
+            game.settings.puffSoundTrigger = false;
         }
     }
 }

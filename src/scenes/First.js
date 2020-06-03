@@ -4,7 +4,7 @@ class First extends Phaser.Scene {
     }
 
     create() {
-        //this.cameras.main.setBackgroundColor("#FFFF00");
+        game.settings.sceneTracker = 1;
 
         // define hotkeys
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -41,16 +41,19 @@ class First extends Phaser.Scene {
         topLayer.setTileIndexCallback([6, 7, 8], () => {
             this.p1.setAlpha(0);
             game.settings.gameOver = true;
-            this.sound.play('deathSound', { volume: 0.2 });
+            if (game.settings.deathSoundPlayed == false) {
+                game.settings.deathSoundPlayed = true;
+                this.sound.play('deathSound', { volume: 1.5 });
+            }
         });
 
         topLayer.setTileIndexCallback([25], () => {
             this.scene.start("secondScene");
         });
 
-        this.gameText = this.add.text(game.config.width / 2, game.config.height / 2, "Press R to Restart").setScale(2).setOrigin(0.5);
-        this.gameText.setVisible(false);
-
+        // Play music & sounds
+        this.music = this.sound.add('bgmusic');
+        this.music.play({ volume: 0.2, loop: -1 });
     }
 
     update() {
@@ -60,20 +63,23 @@ class First extends Phaser.Scene {
         this.wpTop.tilePositionX = this.cameras.main.scrollY * 0.5;
 
         if (game.settings.gameOver == true) {
-            this.gameText.setVisible(true);
-            if (Phaser.Input.Keyboard.JustDown(keyR)) {
-                game.settings.gameOver = false;
-                this.gameText.setVisible(false);
-                this.scene.restart();
-            }
+            this.music.stop();
+            this.sceneSwapTimer = this.time.delayedCall(750, () => {
+                this.scene.start("endScene");
+            }, null, this);
         }
 
         this.p1.update();
 
+        if (game.settings.puffSoundTrigger == true) {
+            this.sound.play('puffSound', { volume: 1 });
+        }
+        
+
         if (Phaser.Input.Keyboard.JustDown(keyONE)) {
             this.scene.start("secondScene");
+            game.settings.deathSoundPlayed = false;
         }
 
     }
-
 }

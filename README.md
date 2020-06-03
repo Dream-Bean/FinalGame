@@ -44,3 +44,6 @@ Commit #14: Core game is now complete. Just need to touch up speeds/variables/si
 
 Commit #15: Implemented parallax scrolling and camera movement. Need to resize game.
             Also need to edit the added sounds.
+
+Commit #16: Edited scene transition. Added new sounds. Fixed code structure. Tweeked
+            with some variables. Bit of polish here and there too.

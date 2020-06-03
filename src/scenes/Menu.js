@@ -11,8 +11,8 @@ class Menu extends Phaser.Scene {
         this.load.spritesheet('blastanim', './assets/skeletonfish_spritesheet.png', { frameWidth: 52, frameHeight: 59, startFrame: 0, endFrame: 6 });
 
         this.load.audio('bgmusic', './assets/bgmusic.mp3');
-        this.load.audio('puffSound', './assets/death.mp3');
-        this.load.audio('deathSound', './assets/puff.mp3');
+        this.load.audio('puffSound', './assets/puff.mp3');
+        this.load.audio('deathSound', './assets/death.mp3');
 
         this.load.image('img1', './assets/img1.png');
         this.load.image('img2', './assets/img2.png');
@@ -26,6 +26,8 @@ class Menu extends Phaser.Scene {
     }
 
     create() {
+        game.settings.sceneTracker = 0;
+
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         this.add.text(game.config.width / 2, game.config.height / 2, "Press Space To Play").setOrigin(0.5);
@@ -45,15 +47,7 @@ class Menu extends Phaser.Scene {
             frameRate: 15,
             repeat: 0,
         });
-
-        // Play music & sounds
-        this.music = this.sound.add('bgmusic');
-        this.music.play({ volume: 0.2, loop: -1 });
-
         
-
-        
-
     }
 
     update() {

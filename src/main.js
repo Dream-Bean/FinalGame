@@ -3,8 +3,8 @@
 // game configuration
 let config = {
     type: Phaser.CANVAS,
-    width: 1280,
-    height: 704,
+    width: 1024,
+    height: 576, //or 768? or back to 1280x720
     physics: {
         default: "arcade",
         arcade: {
@@ -20,7 +20,7 @@ let config = {
         forceSetTimeOut: true,
     },
     pixelArt: true,
-    scene: [Menu, First, Second, Third],
+    scene: [Menu, First, Second, Third, End],
 }
 let game = new Phaser.Game(config);
 
@@ -32,7 +32,11 @@ game.settings = {
     isBubbleTimer1: false,
     isBubbleTimer2: false,
     gameOver: false,
+    deathSoundPlayed: false,
+    puffSoundTrigger: false,
+    sceneTracker: 0,
+    //scene tracker put here. use as a death screen indicator and allow for scene restarts. therefore we dont need death animation.
 }
 
 // reserve keyboard variables
-let keyA, keyD, keySPACE, keyR, keyONE, keyTWO;
+let keyA, keyD, keySPACE, keyR, keyM, keyONE, keyTWO;

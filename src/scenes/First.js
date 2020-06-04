@@ -5,6 +5,7 @@ class First extends Phaser.Scene {
 
     create() {
         game.settings.sceneTracker = 1;
+        game.settings.deathSoundPlayed = false;
 
         // define hotkeys
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -26,7 +27,7 @@ class First extends Phaser.Scene {
         //this.cameras.main.setBounds(0, 0, 200, 200);
 
         
-        this.p1 = new Player(this, 120, 610, 'puffer').setScale(1);
+        this.p1 = new Player(this, 550, 3450, 'puffer').setScale(1).setSize(16,16); //120, 610 //reduce size of player?
         this.cameras.main.startFollow(this.p1);
 
         // set camera bounds
@@ -43,7 +44,7 @@ class First extends Phaser.Scene {
             game.settings.gameOver = true;
             if (game.settings.deathSoundPlayed == false) {
                 game.settings.deathSoundPlayed = true;
-                this.sound.play('deathSound', { volume: 1.5 });
+                this.sound.play('deathSound', { volume: 1 });
             }
         });
 

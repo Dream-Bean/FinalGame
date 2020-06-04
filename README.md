@@ -47,3 +47,7 @@ Commit #15: Implemented parallax scrolling and camera movement. Need to resize g
 
 Commit #16: Edited scene transition. Added new sounds. Fixed code structure. Tweeked
             with some variables. Bit of polish here and there too.
+
+Commit #17: Using new giant map with black background to hide the parallax outside of
+            the game. Although it causes blue lines during movement??? Also tested out
+            a smaller size on the fish for its physics body.

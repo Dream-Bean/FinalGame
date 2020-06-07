@@ -45,7 +45,7 @@ class Storage extends Phaser.Scene {
         // Turret animation
         this.anims.create({
             key: 'skeleBlast',
-            frames: this.anims.generateFrameNumbers('blastanim', { start: 0, end: 5, first: 0 }),
+            frames: this.anims.generateFrameNumbers('blastAnim', { start: 0, end: 5, first: 0 }),
             frameRate: 15,
             repeat: 0,
         });

@@ -61,13 +61,14 @@ class Second extends Phaser.Scene {
 
         this.gameText = this.add.text(game.config.width / 2, game.config.height / 2, "Press R to Restart").setScale(2).setOrigin(0.5);
         this.gameText.setVisible(false);
-        
 
+
+        
     }
 
     update() {
-        this.wpBot.tilePositionX = this.cameras.main.scrollX * 0.15;
-        this.wpTop.tilePositionX = this.cameras.main.scrollX * 0.3;
+        this.wpBot.tilePositionX = this.cameras.main.scrollX * 0.3;
+        this.wpTop.tilePositionX = this.cameras.main.scrollX * 0.5;
 
         if (game.settings.gameOver == true) {
             this.gameText.setVisible(true);
@@ -81,7 +82,7 @@ class Second extends Phaser.Scene {
         if (this.physics.overlap(this.p1, this.blast1)) {
             this.p1.setAlpha(0);
             game.settings.gameOver = true;
-            
+
         }
         if (this.physics.overlap(this.p1, this.blast2)) {
             this.p1.setAlpha(0);
@@ -97,6 +98,7 @@ class Second extends Phaser.Scene {
 
         this.p1.update();
         //console.log(this.blast1.body.velocity.x);
+        this.t1.update();
     }
 
 
@@ -104,6 +106,6 @@ class Second extends Phaser.Scene {
         bubble.x = turret.x;
         bubble.y = turret.y;
         bubble.setVelocityX(100);
-        turret.anims.play('skeleblast');
+        //turret.anims.play('skeleBlast');
     }
 }

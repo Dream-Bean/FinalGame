@@ -5,6 +5,7 @@ class First extends Phaser.Scene {
 
     create() {
         game.settings.playerDied = false;
+        game.settings.gameOver = false;
         game.settings.checkpoint = 0; // 0 1 2
 
         // define hotkeys
@@ -26,9 +27,16 @@ class First extends Phaser.Scene {
         this.player = new Player(this, 525, 3990, 'puffer').setSize(16,16); // 1000,3990
         this.cameras.main.startFollow(this.player);
 
+        //1793.2499999999998 3577.5
+        //825 3961.5
+        this.t1 = new Turret(this, 1795, 3555, 'undead').setScale(1).setDepth(1);
+        this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1);
+
         // colliders
         topLayer.setCollisionByProperty({ collides: true });
         this.physics.add.collider(this.player, topLayer)
+        //this.physics.add.collider(this.player, this.blast1)
+        this.physics.add.collider(this.blast1, topLayer);
         // spikes kill
         topLayer.setTileIndexCallback([6, 7, 8], () => {
             game.settings.gameOver = true;
@@ -57,9 +65,11 @@ class First extends Phaser.Scene {
     }
 
     update() {
-        this.wpBot.tilePositionX = this.cameras.main.scrollX * 0.3;
-        this.wpTop.tilePositionX = this.cameras.main.scrollX * 0.5;
+        // parallax scrolling
+        this.wpBot.tilePositionX = this.cameras.main.scrollX * 0.15;
+        this.wpTop.tilePositionX = this.cameras.main.scrollX * 0.3;
 
+        // game over
         if (game.settings.gameOver == true) {
             if (game.settings.playerDied == false) {
                 game.settings.playerDied = true;
@@ -82,19 +92,42 @@ class First extends Phaser.Scene {
             }
         }
 
+        // player update
         if (game.settings.gameOver == false) {
             this.player.update();
+            //console.log(this.player.x, this.player.y);
             if (game.settings.puffSoundTrigger == true) {
                 this.sound.play('puffSound', { volume: 1 });
             }
         }
 
+        // turrets shooting
+        if (this.physics.overlap(this.player, this.blast1)) {
+            game.settings.gameOver = true;
+        }
+        if (this.blast1.body.velocity.x == 0) {
+            this.reload(this.t1, this.blast1, 'left');
+        }
 
 
+
+        // scene skip
         if (Phaser.Input.Keyboard.JustDown(keyONE)) {
             this.scene.start("secondScene");
             game.settings.deathSoundPlayed = false;
         }
+    }
+
+    reload(turret, bubble, direction) {
+        // add direction with a left/right param?
+        bubble.x = turret.x;
+        bubble.y = turret.y;
+        if (direction == 'left') {
+            bubble.setVelocityX(-100);
+        } else if (direction == 'right') {
+            bubble.setVelocityX(100);
+        }
+        turret.anims.play('skeleBlast');
     }
 
     EndGame() {

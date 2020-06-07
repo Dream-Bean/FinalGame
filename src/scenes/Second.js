@@ -4,108 +4,140 @@ class Second extends Phaser.Scene {
     }
 
     create() {
+        game.settings.playerDied = false;
+        game.settings.gameOver = false;
+        game.settings.checkpoint = 0; // 0 1 2
+
         // define hotkeys
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
 
         // add a tile map
         let map = this.add.tilemap("map2");
         let terrain = map.addTilesetImage("terrain_atlas", "terrain");
-
-        //layers
-        this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img1').setOrigin(0).setScrollFactor(0);
-        this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img2').setOrigin(0).setScrollFactor(0);
+        // layers
+        //this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg1').setOrigin(0).setScrollFactor(0);
+        //this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg2').setOrigin(0).setScrollFactor(0);
+        //this.wpBlack = this.add.tileSprite(-585, 5, 4166, 5183, 'bgBlack').setOrigin(0); //-70, -5
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
-        let extraLayer = map.createStaticLayer("extra", [terrain], 0, 0);
 
+        //248VM108 Second.js:99 1177 921.5
+        this.player = new Player(this, 1175, 920, 'puffer').setSize(16, 16); // 525, 3990 --- 1820, 3580 --- 1560, 3000
+        this.cameras.main.startFollow(this.player);
 
-        this.p1 = new Player(this, 760, 650, 'puffer').setScale(1);
-        this.cameras.main.startFollow(this.p1);
-
-        this.t1 = new Turret(this, 250, 425, 'undead').setScale(1).setFlipX(true).setDepth(1);
-        this.t2 = new Turret(this, 250, 525, 'undead').setScale(1).setFlipX(true).setDepth(1);
+        //1793.2499999999998 3577.5
+        //825 3961.5
+        this.t1 = new Turret(this, 1795, 3555, 'undead').setScale(1).setDepth(1);
         this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1);
-        this.blast2 = new Bubble(this, this.t2.x, this.t2.y, 'bubble').setScale(1);
 
         // colliders
         topLayer.setCollisionByProperty({ collides: true });
-        this.physics.add.collider(this.p1, topLayer);
+        this.physics.add.collider(this.player, topLayer)
+        //this.physics.add.collider(this.player, this.blast1)
         this.physics.add.collider(this.blast1, topLayer);
-        this.physics.add.collider(this.blast2, topLayer);
-
-        // spikes kill player
+        // spikes kill
         topLayer.setTileIndexCallback([6, 7, 8], () => {
-            this.p1.setAlpha(0);
-            game.settings.gameOver = true; //switch to true
-            //set game over
+            game.settings.gameOver = true;
         });
-
         /*
-        extraLayer.setCollisionByProperty({ collides: true});
-        this.physics.add.collider(this.blast1, extraLayer);
-        this.physics.add.collider(this.blast2, extraLayer);
-        topLayer.setTileIndexCallback([1, 2, 3, 4, 6, 7, 8, 11, 12, 13, ], () => {
-            this.p1.setAlpha(0);
-            game.settings.gameOver = true; //switch to true
-            //set game over
+        // checkpoint
+        topLayer.setTileIndexCallback([?], () => {
+            //checkpoint stuff -> maybe so setalpha to 0?
+            //also make it matchup with the restarts and stuff
+            game.settings.checkpoint = 1; //add condition to move it to checkpoint 2 if it already = 1? idk be careful
+            this.backDrop.delete();
+            this.playerGhost.delete()
+            this.endScreenTextTop.delete();
+            this.endScreenTextBot.delete();
+            //new location
         });
         */
-
-        //this.blast1.onCollide.add(this.reset(this.t1, this.blast1), this); //fix these monka
-        //this.blast2.onCollide.add(this.reset(this.t2, this.blast2), this);
-
+        // level transition
         topLayer.setTileIndexCallback([25], () => {
-            this.scene.start("thirdScene");
+            this.scene.start("secondScene");
         });
 
-        this.gameText = this.add.text(game.config.width / 2, game.config.height / 2, "Press R to Restart").setScale(2).setOrigin(0.5);
-        this.gameText.setVisible(false);
-
-
-        
+        // music
+        this.music = this.sound.add('bgMusic');
+        this.music.play({ volume: 0.2, loop: -1 });
     }
 
     update() {
-        this.wpBot.tilePositionX = this.cameras.main.scrollX * 0.3;
-        this.wpTop.tilePositionX = this.cameras.main.scrollX * 0.5;
+        // parallax scrolling
+        //this.wpBot.tilePositionX = this.cameras.main.scrollX * 0.15;
+        //this.wpTop.tilePositionX = this.cameras.main.scrollX * 0.3;
 
+        // game over
         if (game.settings.gameOver == true) {
-            this.gameText.setVisible(true);
+            if (game.settings.playerDied == false) {
+                game.settings.playerDied = true;
+                this.sound.play('deathSound', { volume: 1 });
+                this.music.stop();
+                this.player.setAlpha(0);
+                this.player.setGravity(0);
+                this.player.setVelocity(0);
+                this.cameras.main.stopFollow(this.player);
+                this.endTimer = this.time.delayedCall(100, () => {
+                    this.EndGame();
+                }, null, this);
+            }
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                this.scene.start("firstScene");
                 game.settings.gameOver = false;
-                this.gameText.setVisible(false);
-                this.scene.restart();
+            } else if (Phaser.Input.Keyboard.JustDown(keyM)) {
+                this.scene.start("menuScene");
+                game.settings.gameOver = false;
             }
         }
 
-        if (this.physics.overlap(this.p1, this.blast1)) {
-            this.p1.setAlpha(0);
-            game.settings.gameOver = true;
-
+        // player update
+        if (game.settings.gameOver == false) {
+            this.player.update();
+            console.log(this.player.x, this.player.y);
+            if (game.settings.puffSoundTrigger == true) {
+                this.sound.play('puffSound', { volume: 1 });
+            }
         }
-        if (this.physics.overlap(this.p1, this.blast2)) {
-            this.p1.setAlpha(0);
+
+        // turrets shooting
+        if (this.physics.overlap(this.player, this.blast1)) {
             game.settings.gameOver = true;
         }
-
         if (this.blast1.body.velocity.x == 0) {
-            this.reload(this.t1, this.blast1);
-        }
-        if (this.blast2.body.velocity.x == 0) {
-            this.reload(this.t2, this.blast2);
+            this.reload(this.t1, this.blast1, 'left');
         }
 
-        this.p1.update();
-        //console.log(this.blast1.body.velocity.x);
-        this.t1.update();
+
+
+        // scene skip
+        if (Phaser.Input.Keyboard.JustDown(keyONE)) {
+            this.scene.start("secondScene");
+            game.settings.deathSoundPlayed = false;
+        }
     }
 
-
-    reload(turret, bubble) {
+    reload(turret, bubble, direction) {
+        // add direction with a left/right param?
         bubble.x = turret.x;
         bubble.y = turret.y;
-        bubble.setVelocityX(100);
-        //turret.anims.play('skeleBlast');
+        if (direction == 'left') {
+            bubble.setVelocityX(-100);
+        } else if (direction == 'right') {
+            bubble.setVelocityX(100);
+        }
+        turret.anims.play('skeleBlast');
+    }
+
+    EndGame() {
+        this.backDrop = this.add.tileSprite(this.player.x, this.player.y, 1050, 600, 'blackSquare').setOrigin(0.5).setAlpha(0.5);
+        this.playerGhost = new Player(this, this.player.x, this.player.y - 15, 'puffer').setScale(5).setOrigin(0.5);
+        this.playerGhost.anims.play('puffDeath');
+        this.playerGhost.setGravity(0);
+        this.playerGhost.setVelocity(0);
+        this.endScreenTextTop = this.add.tileSprite(this.player.x, this.player.y - 175, 424, 57, 'endTextTop').setOrigin(0.5);
+        this.endScreenTextBot = this.add.tileSprite(this.player.x, this.player.y + 175, 363, 95, 'endTextBot').setOrigin(0.5);
     }
 }

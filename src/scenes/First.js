@@ -21,24 +21,25 @@ class First extends Phaser.Scene {
         // layers
         this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg1').setOrigin(0).setScrollFactor(0);
         this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg2').setOrigin(0).setScrollFactor(0);
-        this.wpBlack = this.add.tileSprite(-585, 5, 4166, 5183, 'bgBlack').setOrigin(0); //-70, -5
+        this.wpBlack = this.add.tileSprite(-295, -35, 3200, 4608, 'bgBlack').setOrigin(0); //-70, -5
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
-        this.player = new Player(this, 1820, 3580, 'puffer').setSize(16,16); // 525, 3990
+        
+        this.player = new Player(this, 555, 3900, 'puffer').setSize(16, 16); // 525, 3990 --- 1820, 3580 --- 1560, 3000 --- 1417 2425.5
         this.cameras.main.startFollow(this.player);
 
         //1793.2499999999998 3577.5
         //825 3961.5
-        this.t1 = new Turret(this, 1795, 3555, 'undead').setScale(1).setDepth(1);
-        this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1);
+        //this.t1 = new Turret(this, 1795, 3555, 'undead').setScale(1).setDepth(1);
+        //this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1);
 
         // colliders
         topLayer.setCollisionByProperty({ collides: true });
         this.physics.add.collider(this.player, topLayer)
+        //this.physics.add.collider(this.blast1, topLayer);
         //this.physics.add.collider(this.player, this.blast1)
-        this.physics.add.collider(this.blast1, topLayer);
         // spikes kill
-        topLayer.setTileIndexCallback([6, 7, 8], () => {
+        topLayer.setTileIndexCallback([13, 14, 15], () => {
             game.settings.gameOver = true;
         });
         /*
@@ -55,7 +56,7 @@ class First extends Phaser.Scene {
         });
         */
         // level transition
-        topLayer.setTileIndexCallback([25], () => {
+        topLayer.setTileIndexCallback([11], () => {
             this.scene.start("secondScene");
         });
 
@@ -95,12 +96,13 @@ class First extends Phaser.Scene {
         // player update
         if (game.settings.gameOver == false) {
             this.player.update();
-            //console.log(this.player.x, this.player.y);
+            console.log(this.player.x, this.player.y);
             if (game.settings.puffSoundTrigger == true) {
                 this.sound.play('puffSound', { volume: 1 });
             }
         }
 
+        /*
         // turrets shooting
         if (this.physics.overlap(this.player, this.blast1)) {
             game.settings.gameOver = true;
@@ -108,6 +110,7 @@ class First extends Phaser.Scene {
         if (this.blast1.body.velocity.x == 0) {
             this.reload(this.t1, this.blast1, 'left');
         }
+        */
 
 
 

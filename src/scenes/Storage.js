@@ -7,6 +7,8 @@ class Storage extends Phaser.Scene {
         this.load.image('puffer', './assets/pufferfish.png');
         this.load.image('undead', './assets/undead_fish.png');
         this.load.image('bubble', './assets/bubble.png');
+        this.load.image('endTextTop', './assets/gameover_text.png');
+        this.load.image('endTextBot', './assets/bottom_text.png');
         this.load.spritesheet('puffAnim', './assets/puff_spritesheet.png', { frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 4 });
         this.load.spritesheet('deathAnim', './assets/death_spritesheet.png', { frameWidth: 34, frameHeight: 38, startFrame: 0, endFrame: 7 });
         this.load.spritesheet('blastAnim', './assets/skeletonfish_spritesheet.png', { frameWidth: 52, frameHeight: 59, startFrame: 0, endFrame: 6 });
@@ -37,7 +39,7 @@ class Storage extends Phaser.Scene {
             key: 'puffDeath',
             frames: this.anims.generateFrameNumbers('deathAnim', { start: 0, end: 6, first: 0 }),
             frameRate: 12,
-            repeat: 0,
+            repeat: -1,
         });
         // Turret animation
         this.anims.create({

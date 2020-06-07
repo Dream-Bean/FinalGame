@@ -61,6 +61,7 @@ class Second extends Phaser.Scene {
 
         this.gameText = this.add.text(game.config.width / 2, game.config.height / 2, "Press R to Restart").setScale(2).setOrigin(0.5);
         this.gameText.setVisible(false);
+        
 
     }
 

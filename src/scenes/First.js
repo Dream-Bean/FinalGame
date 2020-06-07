@@ -11,6 +11,7 @@ class First extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
         keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
 
@@ -22,7 +23,9 @@ class First extends Phaser.Scene {
         this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img2').setOrigin(0).setScrollFactor(0);
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
-        this.player = new Player(this, 1000, 3990, 'puffer').setSize(16,16);
+        
+
+        this.player = new Player(this, 1000, 3990, 'puffer').setSize(16,16); 
         this.cameras.main.startFollow(this.player);
 
         // colliders
@@ -42,7 +45,7 @@ class First extends Phaser.Scene {
         // music
         //this.music = this.sound.add('bgmusic');
         //this.music.play({ volume: 0.2, loop: -1 });
-        
+
     }
 
     update() {
@@ -54,12 +57,18 @@ class First extends Phaser.Scene {
                 game.settings.playerDied = true;
                 this.sound.play('deathSound', { volume: 1 });
                 this.player.anims.play('puffDeath');
+                this.player.setGravity(0);
+                this.player.setVelocity(0);
+                this.cameras.main.stopFollow(this.player);
+                this.EndGame();
             }
-            //this.music.stop();
-            //add some gravity?
-            this.sceneSwapTimer = this.time.delayedCall(1000, () => {
-                this.scene.start("endScene");
-            }, null, this);
+            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                this.scene.start("firstScene");
+                game.settings.gameOver = false;
+            } else if (Phaser.Input.Keyboard.JustDown(keyM)) {
+                this.scene.start("menuScene");
+                game.settings.gameOver = false;
+            }
         }
 
         if (game.settings.gameOver == false) {
@@ -68,13 +77,17 @@ class First extends Phaser.Scene {
                 this.sound.play('puffSound', { volume: 1 });
             }
         }
-        
-
-
 
         if (Phaser.Input.Keyboard.JustDown(keyONE)) {
             this.scene.start("secondScene");
             game.settings.deathSoundPlayed = false;
         }
+    }
+
+    EndGame() {
+        this.add.rectangle(this.player.x, this.player.y, 1024, 576, 0x000000).setOrigin(0.5).setAlpha(0.5);
+
+        this.endScreenTextTop = this.add.tileSprite(this.player.x, this.player.y - 175, 424, 57, 'endTextTop').setScale(1).setOrigin(0.5);
+        this.endScreenTextBot = this.add.tileSprite(this.player.x, this.player.y + 150, 363, 95, 'endTextBot').setScale(1).setOrigin(0.5);
     }
 }

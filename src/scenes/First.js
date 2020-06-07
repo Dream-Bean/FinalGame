@@ -24,7 +24,7 @@ class First extends Phaser.Scene {
         this.wpBlack = this.add.tileSprite(-585, 5, 4166, 5183, 'bgBlack').setOrigin(0); //-70, -5
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
-        this.player = new Player(this, 525, 3990, 'puffer').setSize(16,16); // 1000,3990
+        this.player = new Player(this, 1820, 3580, 'puffer').setSize(16,16); // 525, 3990
         this.cameras.main.startFollow(this.player);
 
         //1793.2499999999998 3577.5

@@ -69,4 +69,4 @@ Commit #22: Purged excess files, and did some renaming. Updated map. More file s
 
 Commit #23: Reorganized the asset folder into subfolders.
 
-Commit #24: Began to add turretes to lvl1.
+Commit #24: Began to add turrets to lvl1.

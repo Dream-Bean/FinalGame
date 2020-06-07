@@ -23,8 +23,6 @@ class First extends Phaser.Scene {
         this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img2').setOrigin(0).setScrollFactor(0);
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
-        
-
         this.player = new Player(this, 1000, 3990, 'puffer').setSize(16,16); 
         this.cameras.main.startFollow(this.player);
 
@@ -56,11 +54,14 @@ class First extends Phaser.Scene {
             if (game.settings.playerDied == false) {
                 game.settings.playerDied = true;
                 this.sound.play('deathSound', { volume: 1 });
-                this.player.anims.play('puffDeath');
+                //this.player.anims.play('puffDeath');
+                this.player.setAlpha(0);
                 this.player.setGravity(0);
                 this.player.setVelocity(0);
                 this.cameras.main.stopFollow(this.player);
-                this.EndGame();
+                this.endTimer = this.time.delayedCall(100, () => {
+                    this.EndGame();
+                }, null, this);
             }
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.scene.start("firstScene");
@@ -86,8 +87,11 @@ class First extends Phaser.Scene {
 
     EndGame() {
         this.add.rectangle(this.player.x, this.player.y, 1024, 576, 0x000000).setOrigin(0.5).setAlpha(0.5);
-
+        this.playerGhost = new Player(this, this.player.x, this.player.y - 15, 'puffer').setScale(5).setOrigin(0.5);
+        this.playerGhost.anims.play('puffDeath');
+        this.playerGhost.setGravity(0);
+        this.playerGhost.setVelocity(0);
         this.endScreenTextTop = this.add.tileSprite(this.player.x, this.player.y - 175, 424, 57, 'endTextTop').setScale(1).setOrigin(0.5);
-        this.endScreenTextBot = this.add.tileSprite(this.player.x, this.player.y + 150, 363, 95, 'endTextBot').setScale(1).setOrigin(0.5);
+        this.endScreenTextBot = this.add.tileSprite(this.player.x, this.player.y + 175, 363, 95, 'endTextBot').setScale(1).setOrigin(0.5);
     }
 }

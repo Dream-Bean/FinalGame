@@ -56,3 +56,6 @@ Commit #18: Uploaded a new map for level1. Worked on some file structure/clearin
             Death animation added.  
 
 Commit #19: Implementing new end screen and new map.       
+
+Commit #20: Removed debugger. Edited new screen. Changed death and end screen transition.
+            Also added new map.

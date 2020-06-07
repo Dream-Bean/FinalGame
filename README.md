@@ -51,3 +51,6 @@ Commit #16: Edited scene transition. Added new sounds. Fixed code structure. Twe
 Commit #17: Using new giant map with black background to hide the parallax outside of
             the game. Although it causes blue lines during movement??? Also tested out
             a smaller size on the fish for its physics body.
+
+Commit #18: Uploaded a new map for level1. Worked on some file structure/clearing clutter.
+            Death animation added.         

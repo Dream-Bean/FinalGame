@@ -20,7 +20,7 @@ let config = {
         forceSetTimeOut: true,
     },
     pixelArt: true,
-    scene: [Menu, First, Second, Third, End],
+    scene: [Storage, Menu, First, Second, Third, End],
 }
 let game = new Phaser.Game(config);
 
@@ -32,7 +32,7 @@ game.settings = {
     isBubbleTimer1: false,
     isBubbleTimer2: false,
     gameOver: false,
-    deathSoundPlayed: false,
+    playerDied: false,
     puffSoundTrigger: false,
     sceneTracker: 0,
     //scene tracker put here. use as a death screen indicator and allow for scene restarts. therefore we dont need death animation.

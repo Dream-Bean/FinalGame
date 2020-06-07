@@ -18,13 +18,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(-game.settings.playerVelocityY);
             this.setVelocityX(-game.settings.playerVelocityX);
             this.setFlipX(true);
-            this.anims.play('puffup');
+            this.anims.play('puffUp');
             game.settings.puffSoundTrigger = true;
         } else if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.setVelocityY(-game.settings.playerVelocityY);
             this.setVelocityX(game.settings.playerVelocityX);
             this.setFlipX(false);
-            this.anims.play('puffup');
+            this.anims.play('puffUp');
             game.settings.puffSoundTrigger = true;
         } else {
             game.settings.puffSoundTrigger = false;

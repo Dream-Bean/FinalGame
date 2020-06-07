@@ -62,3 +62,7 @@ Commit #20: Removed debugger. Edited new screen. Changed death and end screen tr
 
 Commit #21: Fixing map, fixed background issue with tile bleeding. Changed sounds/music.
             File restructuring.
+
+Commit #22: Purged excess files, and did some renaming. Updated map. More file structure,
+            and code cleaning work. Layed down some base work for checkpoints w/ tweaking
+            of EndGame() function.

@@ -66,8 +66,8 @@ class Second extends Phaser.Scene {
     }
 
     update() {
-        this.wpBot.tilePositionX = this.cameras.main.scrollX * 0.3;
-        this.wpTop.tilePositionX = this.cameras.main.scrollX * 0.5;
+        this.wpBot.tilePositionX = this.cameras.main.scrollX * 0.15;
+        this.wpTop.tilePositionX = this.cameras.main.scrollX * 0.3;
 
         if (game.settings.gameOver == true) {
             this.gameText.setVisible(true);

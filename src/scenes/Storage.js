@@ -5,12 +5,13 @@ class Storage extends Phaser.Scene {
 
     preload() {
         this.load.image('puffer', './assets/pufferfish.png');
-        this.load.image('undead', './assets/undead_fish.png');
+        this.load.image('undead', './assets/undeadfish.png');
         this.load.image('bubble', './assets/bubble.png');
         this.load.spritesheet('puffAnim', './assets/puff_spritesheet.png', { frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 4 });
         this.load.spritesheet('deathAnim', './assets/death_spritesheet.png', { frameWidth: 43, frameHeight: 42, startFrame: 0, endFrame: 7 });
         this.load.spritesheet('blastAnim', './assets/skeletonfish_spritesheet.png', { frameWidth: 52, frameHeight: 59, startFrame: 0, endFrame: 6 });
         
+        this.load.image('blackSquare', './assets/black_square.png');
         this.load.image('endTextTop', './assets/gameover_text.png');
         this.load.image('endTextBot', './assets/bottom_text.png');
 
@@ -19,12 +20,11 @@ class Storage extends Phaser.Scene {
         this.load.audio('deathSound', './assets/death.mp3');
 
         this.load.image('bgBlack', './assets/blackbg.png');
-        this.load.image('img1', './assets/img1.png');
-        this.load.image('img2', './assets/img2.png');
+        this.load.image('bg1', './assets/img1.png');
+        this.load.image('bg2', './assets/img2.png');
         this.load.image("terrain", "./assets/terrain_atlas.png");
-        this.load.tilemapTiledJSON("map1", "./assets/gameMap1.json");
+        this.load.tilemapTiledJSON("map1", "./assets/level1.json");
         this.load.tilemapTiledJSON("map2", "./assets/lvl2.json");
-        this.load.tilemapTiledJSON("map3", "./assets/level3.json");
     }
 
     create() {
@@ -50,12 +50,6 @@ class Storage extends Phaser.Scene {
             repeat: 0,
         });
 
-        // music
-        this.music = this.sound.add('bgMusic');
-        this.music.play({ volume: 0.2, loop: -1 });
-    }
-
-    update() {
         this.scene.start("menuScene");
     }
 }

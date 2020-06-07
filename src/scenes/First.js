@@ -4,8 +4,8 @@ class First extends Phaser.Scene {
     }
 
     create() {
-        game.settings.sceneTracker = 1;
         game.settings.playerDied = false;
+        game.settings.checkpoint = 0; // 0 1 2
 
         // define hotkeys
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -13,15 +13,14 @@ class First extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
-        keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
 
         // add a tile map
         let map = this.add.tilemap("map1");
         let terrain = map.addTilesetImage("terrain_atlas", "terrain");
         // layers
-        this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img1').setOrigin(0).setScrollFactor(0);
-        this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img2').setOrigin(0).setScrollFactor(0);
-        this.wpBlack = this.add.tileSprite(-585, 0, 4166, 5183, 'bgBlack').setOrigin(0); //-70, -5
+        this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg1').setOrigin(0).setScrollFactor(0);
+        this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg2').setOrigin(0).setScrollFactor(0);
+        this.wpBlack = this.add.tileSprite(-585, 2, 4166, 5183, 'bgBlack').setOrigin(0); //-70, -5
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
         this.player = new Player(this, 525, 3990, 'puffer').setSize(16,16); // 1000,3990
@@ -30,21 +29,31 @@ class First extends Phaser.Scene {
         // colliders
         topLayer.setCollisionByProperty({ collides: true });
         this.physics.add.collider(this.player, topLayer)
-        // spikes kill player
+        // spikes kill
         topLayer.setTileIndexCallback([6, 7, 8], () => {
-            //this.p1.setAlpha(0);
             game.settings.gameOver = true;
-            
         });
-        // end of lvl
+        /*
+        // checkpoint
+        topLayer.setTileIndexCallback([?], () => {
+            //checkpoint stuff -> maybe so setalpha to 0?
+            //also make it matchup with the restarts and stuff
+            game.settings.checkpoint = 1; //add condition to move it to checkpoint 2 if it already = 1? idk be careful
+            this.backDrop.delete();
+            this.playerGhost.delete()
+            this.endScreenTextTop.delete();
+            this.endScreenTextBot.delete();
+            //new location
+        });
+        */
+        // level transition
         topLayer.setTileIndexCallback([25], () => {
             this.scene.start("secondScene");
         });
 
         // music
-        //this.music = this.sound.add('bgmusic');
-        //this.music.play({ volume: 0.2, loop: -1 });
-
+        this.music = this.sound.add('bgMusic');
+        this.music.play({ volume: 0.2, loop: -1 });
     }
 
     update() {
@@ -55,7 +64,7 @@ class First extends Phaser.Scene {
             if (game.settings.playerDied == false) {
                 game.settings.playerDied = true;
                 this.sound.play('deathSound', { volume: 1 });
-                //this.player.anims.play('puffDeath');
+                this.music.stop();
                 this.player.setAlpha(0);
                 this.player.setGravity(0);
                 this.player.setVelocity(0);
@@ -80,6 +89,8 @@ class First extends Phaser.Scene {
             }
         }
 
+
+
         if (Phaser.Input.Keyboard.JustDown(keyONE)) {
             this.scene.start("secondScene");
             game.settings.deathSoundPlayed = false;
@@ -87,12 +98,12 @@ class First extends Phaser.Scene {
     }
 
     EndGame() {
-        this.add.rectangle(this.player.x, this.player.y, 1050, 600, 0x000000).setOrigin(0.5).setAlpha(0.5);
+        this.backDrop = this.add.tileSprite(this.player.x, this.player.y, 1050, 600, 'blackSquare').setOrigin(0.5).setAlpha(0.5);
         this.playerGhost = new Player(this, this.player.x, this.player.y - 15, 'puffer').setScale(5).setOrigin(0.5);
         this.playerGhost.anims.play('puffDeath');
         this.playerGhost.setGravity(0);
         this.playerGhost.setVelocity(0);
-        this.endScreenTextTop = this.add.tileSprite(this.player.x, this.player.y - 175, 424, 57, 'endTextTop').setScale(1).setOrigin(0.5);
-        this.endScreenTextBot = this.add.tileSprite(this.player.x, this.player.y + 175, 363, 95, 'endTextBot').setScale(1).setOrigin(0.5);
+        this.endScreenTextTop = this.add.tileSprite(this.player.x, this.player.y - 175, 424, 57, 'endTextTop').setOrigin(0.5);
+        this.endScreenTextBot = this.add.tileSprite(this.player.x, this.player.y + 175, 363, 95, 'endTextBot').setOrigin(0.5);
     }
 }

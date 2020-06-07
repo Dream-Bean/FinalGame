@@ -20,7 +20,7 @@ class First extends Phaser.Scene {
         // layers
         this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg1').setOrigin(0).setScrollFactor(0);
         this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg2').setOrigin(0).setScrollFactor(0);
-        this.wpBlack = this.add.tileSprite(-585, 2, 4166, 5183, 'bgBlack').setOrigin(0); //-70, -5
+        this.wpBlack = this.add.tileSprite(-585, 5, 4166, 5183, 'bgBlack').setOrigin(0); //-70, -5
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
         this.player = new Player(this, 525, 3990, 'puffer').setSize(16,16); // 1000,3990

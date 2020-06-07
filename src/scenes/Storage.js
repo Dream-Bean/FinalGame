@@ -4,27 +4,27 @@ class Storage extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('puffer', './assets/pufferfish.png');
-        this.load.image('undead', './assets/undeadfish.png');
-        this.load.image('bubble', './assets/bubble.png');
-        this.load.spritesheet('puffAnim', './assets/puff_spritesheet.png', { frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 4 });
-        this.load.spritesheet('deathAnim', './assets/death_spritesheet.png', { frameWidth: 43, frameHeight: 42, startFrame: 0, endFrame: 7 });
-        this.load.spritesheet('blastAnim', './assets/skeletonfish_spritesheet.png', { frameWidth: 52, frameHeight: 59, startFrame: 0, endFrame: 6 });
+        this.load.image('puffer', './assets/sprites/pufferfish.png');
+        this.load.image('undead', './assets/sprites/undeadfish.png');
+        this.load.image('bubble', './assets/sprites/bubble.png');
+        this.load.spritesheet('puffAnim', './assets/sprites/puff_spritesheet.png', { frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 4 });
+        this.load.spritesheet('deathAnim', './assets/sprites/death_spritesheet.png', { frameWidth: 43, frameHeight: 42, startFrame: 0, endFrame: 7 });
+        this.load.spritesheet('blastAnim', './assets/sprites/skeletonfish_spritesheet.png', { frameWidth: 52, frameHeight: 59, startFrame: 0, endFrame: 6 });
         
-        this.load.image('blackSquare', './assets/black_square.png');
-        this.load.image('endTextTop', './assets/gameover_text.png');
-        this.load.image('endTextBot', './assets/bottom_text.png');
+        this.load.image('blackSquare', './assets/miscellaneous/black_square.png');
+        this.load.image('endTextTop', './assets/miscellaneous/gameover_text.png');
+        this.load.image('endTextBot', './assets/miscellaneous/bottom_text.png');
 
-        this.load.audio('bgMusic', './assets/bgmusic.mp3');
-        this.load.audio('puffSound', './assets/puff.mp3');
-        this.load.audio('deathSound', './assets/death.mp3');
+        this.load.audio('bgMusic', './assets/sounds/bgmusic.mp3');
+        this.load.audio('puffSound', './assets/sounds/puff.mp3');
+        this.load.audio('deathSound', './assets/sounds/death.mp3');
 
-        this.load.image('bgBlack', './assets/blackbg.png');
-        this.load.image('bg1', './assets/img1.png');
-        this.load.image('bg2', './assets/img2.png');
-        this.load.image("terrain", "./assets/terrain_atlas.png");
-        this.load.tilemapTiledJSON("map1", "./assets/level1.json");
-        this.load.tilemapTiledJSON("map2", "./assets/lvl2.json");
+        this.load.image('bgBlack', './assets/levels/blackbg.png');
+        this.load.image('bg1', './assets/levels/img1.png');
+        this.load.image('bg2', './assets/levels/img2.png');
+        this.load.image("terrain", "./assets/levels/terrain_atlas.png");
+        this.load.tilemapTiledJSON("map1", "./assets/levels/lvl1.json");
+        this.load.tilemapTiledJSON("map2", "./assets/levels/lvl2.json");
     }
 
     create() {

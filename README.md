@@ -66,3 +66,5 @@ Commit #21: Fixing map, fixed background issue with tile bleeding. Changed sound
 Commit #22: Purged excess files, and did some renaming. Updated map. More file structure,
             and code cleaning work. Layed down some base work for checkpoints w/ tweaking
             of EndGame() function.
+
+Commit #23: Reorganized the asset folder into subfolders.

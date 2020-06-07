@@ -21,9 +21,10 @@ class First extends Phaser.Scene {
         // layers
         this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img1').setOrigin(0).setScrollFactor(0);
         this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'img2').setOrigin(0).setScrollFactor(0);
+        this.wpBlack = this.add.tileSprite(-585, 0, 4166, 5183, 'bgBlack').setOrigin(0); //-70, -5
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
-        this.player = new Player(this, 1000, 3990, 'puffer').setSize(16,16); 
+        this.player = new Player(this, 525, 3990, 'puffer').setSize(16,16); // 1000,3990
         this.cameras.main.startFollow(this.player);
 
         // colliders
@@ -86,7 +87,7 @@ class First extends Phaser.Scene {
     }
 
     EndGame() {
-        this.add.rectangle(this.player.x, this.player.y, 1024, 576, 0x000000).setOrigin(0.5).setAlpha(0.5);
+        this.add.rectangle(this.player.x, this.player.y, 1050, 600, 0x000000).setOrigin(0.5).setAlpha(0.5);
         this.playerGhost = new Player(this, this.player.x, this.player.y - 15, 'puffer').setScale(5).setOrigin(0.5);
         this.playerGhost.anims.play('puffDeath');
         this.playerGhost.setGravity(0);

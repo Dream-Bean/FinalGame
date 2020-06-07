@@ -59,3 +59,6 @@ Commit #19: Implementing new end screen and new map.
 
 Commit #20: Removed debugger. Edited new screen. Changed death and end screen transition.
             Also added new map.
+
+Commit #21: Fixing map, fixed background issue with tile bleeding. Changed sounds/music.
+            File restructuring.

@@ -14,6 +14,7 @@ class Storage extends Phaser.Scene {
         this.load.image('blackSquare', './assets/miscellaneous/black_square.png');
         this.load.image('endTextTop', './assets/miscellaneous/gameover_text.png');
         this.load.image('endTextBot', './assets/miscellaneous/bottom_text.png');
+        this.load.image('tutorial', './assets/miscellaneous/tutorial.png');
 
         this.load.audio('bgMusic', './assets/sounds/bgmusic.mp3');
         this.load.audio('puffSound', './assets/sounds/puff.mp3');

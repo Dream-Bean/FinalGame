@@ -75,3 +75,5 @@ Commit #25: Pushed new lvl1 map and terrain atlas.
 
 Commit #26: Added favicon. Map adjustments. basic lvl2 addition. Music integration was
             reworked. Changed the parallax in size/color/speed
+
+Commit #27: Added tutorial scene.

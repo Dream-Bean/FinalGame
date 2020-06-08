@@ -6,13 +6,14 @@ class First extends Phaser.Scene {
     create() {
         game.settings.playerDied = false;
         game.settings.gameOver = false;
-        game.settings.checkpoint = 0; // 0 1 2
+        game.settings.checkpoint = 0;
 
         // define hotkeys
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
 
         // music
@@ -30,18 +31,20 @@ class First extends Phaser.Scene {
         this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg2').setScale(2.2).setOrigin(0).setScrollFactor(0);
         this.wpBlack = this.add.tileSprite(-290, -35, 3200, 4608, 'bgBlack').setOrigin(0);
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
-
         
         this.player = new Player(this, 555, 3900, 'puffer').setSize(16, 16);
         this.cameras.main.startFollow(this.player);
-        //2005 3605 first checkpoint
 
-        //1793.2499999999998 3577.5
-        //825 3961.5
+
+        this.cp1 = new Checkpoint(this, 2005, 3605).setSize(48, 48).setOrigin(1);
+        //this.cp2 = new Checkpoint(this, 2005, 3605).setSize(64, 64).setOrigin(1);
+
+
         //this.t1 = new Turret(this, 1795, 3555, 'undead').setScale(1).setDepth(1);
         //this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1);
 
-        // colliders
+
+        // collisions*overlaps
         topLayer.setCollisionByProperty({ collides: true });
         this.physics.add.collider(this.player, topLayer)
         //this.physics.add.collider(this.blast1, topLayer);
@@ -50,30 +53,13 @@ class First extends Phaser.Scene {
         topLayer.setTileIndexCallback([13, 14, 15], () => {
             game.settings.gameOver = true;
         });
-        topLayer.setTileIndexCallback([28, 29, 34, 35], () => {
-            // set playerx to a global position initially. have it changed based on checkpoint. Have like 4 points. reset it to initial if start is hit.
-            //do checking based on whether player.y position is lower than a number?
-        });
-        /*
-        // checkpoint
-        topLayer.setTileIndexCallback([?], () => {
-            //checkpoint stuff -> maybe so setalpha to 0?
-            //also make it matchup with the restarts and stuff
-            game.settings.checkpoint = 1; //add condition to move it to checkpoint 2 if it already = 1? idk be careful
-            this.backDrop.destroy();
-            this.playerGhost.destroy();
-            this.endScreenTextTop.destroy();
-            this.endScreenTextBot.destroy();
-            //new location
-        });
-        */
         // level transition
         topLayer.setTileIndexCallback([11], () => {
             this.scene.start("secondScene");
+            game.settings.checkpoint = 0;
             game.settings.musicIsOn = false;
             this.music.stop();
         });
-        
     }
 
     update() {
@@ -86,7 +72,6 @@ class First extends Phaser.Scene {
             if (game.settings.playerDied == false) {
                 game.settings.playerDied = true;
                 this.sound.play('deathSound', { volume: 1 });
-                this.player.setAlpha(0);
                 this.player.setGravity(0);
                 this.player.setVelocity(0);
                 this.cameras.main.stopFollow(this.player);
@@ -94,21 +79,48 @@ class First extends Phaser.Scene {
                     this.EndGame();
                 }, null, this);
             }
+            // restart level
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 game.settings.gameOver = false;
+                game.settings.checkpointNumber = 0
                 this.scene.start("firstScene");
+            // return to menu
             } else if (Phaser.Input.Keyboard.JustDown(keyM)) {
                 this.music.stop(); 
                 game.settings.musicIsOn = false;
                 game.settings.gameOver = false;
                 this.scene.start("menuScene");
+            // resume game
+            } else if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                game.settings.gameOver = false;
+                game.settings.playerDied = false;
+                this.player.setGravity(0, 250);
+                this.cameras.main.startFollow(this.player);
+                this.backDrop.destroy();
+                this.playerGhost.destroy();
+                this.endScreenTextTop.destroy();
+                this.endScreenTextBot.destroy();
+
+                // respawn location
+                if (game.settings.checkpointNumber == 0) {
+                    this.player.x = 555;
+                    this.player.y = 3900;
+                } else if (game.settings.checkpointNumber == 1) {
+                    this.player.x = 2005;
+                    this.player.y = 3605;
+                }
             }
+        }
+
+        // save location
+        if (this.physics.overlap(this.player, this.cp1)) {
+            game.settings.checkpointNumber = 1;
         }
 
         // player update
         if (game.settings.gameOver == false) {
             this.player.update();
-            console.log(this.player.x, this.player.y);
+            //console.log(this.player.x, this.player.y);
             if (game.settings.puffSoundTrigger == true) {
                 this.sound.play('puffSound', { volume: 1 });
             }

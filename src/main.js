@@ -7,7 +7,7 @@ let config = {
     physics: {
         default: "arcade",
         arcade: {
-            debug: false,
+            debug: true,
             gravity: {
                 x: 0,
                 y: 0,
@@ -32,7 +32,7 @@ game.settings = {
     playerVelocityX: 150,
     isBubbleTimer1: false,
     isBubbleTimer2: false,
-    checkpoint: 0,
+    checkpointNumber: 0,
 }
 
 // reserve keyboard variables

@@ -77,3 +77,5 @@ Commit #26: Added favicon. Map adjustments. basic lvl2 addition. Music integrati
             reworked. Changed the parallax in size/color/speed
 
 Commit #27: Added tutorial scene.
+
+Commit #28: Added checkpoints to the game.

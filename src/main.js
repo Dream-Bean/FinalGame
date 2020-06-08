@@ -27,6 +27,7 @@ game.settings = {
     gameOver: false,
     playerDied: false,
     puffSoundTrigger: false,
+    musicIsOn: false,
     playerVelocityY: 100,
     playerVelocityX: 150,
     isBubbleTimer1: false,

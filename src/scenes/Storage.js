@@ -36,7 +36,7 @@ class Storage extends Phaser.Scene {
 
         // levels + aesthetics
         this.load.image('bgBlack1', './assets/levels/blackbg1.png');
-        //this.load.image('bgBlack2', './assets/levels/blackbg2.png');
+        this.load.image('bgBlack2', './assets/levels/blackbg2.png');
         this.load.image('bg1', './assets/levels/img1.png');
         this.load.image('bg2', './assets/levels/img2.png');
         this.load.image("terrain", "./assets/levels/terrain_atlas.png");

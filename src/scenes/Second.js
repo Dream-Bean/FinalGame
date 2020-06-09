@@ -4,6 +4,7 @@ class Second extends Phaser.Scene {
     }
 
     create() {
+        // reset variables
         game.settings.playerDied = false;
         game.settings.gameOver = false;
         game.settings.checkpoint = 0;
@@ -16,43 +17,75 @@ class Second extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
 
+        // music
+        if (game.settings.musicIsOn == false) {
+            this.music = this.sound.add('bgMusic');
+            this.music.play({ volume: 0.2, loop: -1 });
+            game.settings.musicIsOn = true;
+        }
+
         // add a tile map
         let map = this.add.tilemap("map2");
         let terrain = map.addTilesetImage("terrain_atlas", "terrain");
         // layers
         this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg1').setScale(2).setOrigin(0).setScrollFactor(0);
         this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg2').setScale(2).setOrigin(0).setScrollFactor(0);
-        //this.wpBlack = this.add.tileSprite(-585, 5, 4166, 5183, 'bgBlack').setOrigin(0); //-70, -5
+        this.wpBlack = this.add.tileSprite(-255, -65, 2560, 2560, 'bgBlack2').setOrigin(0);
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
-        //248VM108 Second.js:99 1177 921.5
-        this.player = new Player(this, 1175, 920, 'puffer').setSize(16, 16); // 525, 3990 --- 1820, 3580 --- 1560, 3000
+        this.player = new Player(this, 1770, 1910, 'puffer').setFlipX(true).setSize(16, 16);
         this.cameras.main.startFollow(this.player);
 
-        
+        this.cp1 = new Checkpoint(this, 715, 1880).setSize(48, 48).setOrigin(1);
+        this.cp2 = new Checkpoint(this, 1037, 600).setSize(112, 48).setOrigin(1);
+        //this.cp3
 
-        this.cp1 = new Checkpoint(this, 2005, 3605).setSize(48, 48).setOrigin(1);
-        //this.cp2 = new Checkpoint(this, 2005, 3605).setSize(64, 64).setOrigin(1);
+        this.t1 = new Turret(this, 850, 1795, 'undead').setScale(1).setFlipX(true).setDepth(1);
+        this.t2 = new Turret(this, 700, 1575, 'undead').setScale(1).setDepth(1);
+        this.t3 = new Turret(this, 400, 1500, 'undead').setScale(1).setFlipX(true).setDepth(1);
+        this.t4 = new Turret(this, 700, 1390, 'undead').setScale(1).setDepth(1);
+        this.t5 = new Turret(this, 400, 1305, 'undead').setScale(1).setFlipX(true).setDepth(1);
+        this.t6 = new Turret(this, 700, 1205, 'undead').setScale(1).setDepth(1);
+        this.t7 = new Turret(this, 400, 1070, 'undead').setScale(1).setFlipX(true).setDepth(1);
+        this.t8 = new Turret(this, 700, 1010, 'undead').setScale(1).setDepth(1);
+        this.t9 = new Turret(this, 400, 890, 'undead').setScale(1).setFlipX(true).setDepth(1);
+        this.t10 = new Turret(this, 700, 810, 'undead').setScale(1).setDepth(1);
+        this.t11 = new Turret(this, 700, 690, 'undead').setScale(1).setDepth(1);
 
-
-        //1793.2499999999998 3577.5
-        //825 3961.5
-        this.t1 = new Turret(this, 360, 780, 'undead').setScale(1).setFlipX(true).setDepth(1);
         this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1);
-
-
-        // collisions*overlaps
+        this.blast2 = new Bubble(this, this.t2.x, this.t2.y, 'bubble').setScale(1);
+        this.blast3 = new Bubble(this, this.t3.x, this.t3.y, 'bubble').setScale(1);
+        this.blast4 = new Bubble(this, this.t4.x, this.t4.y, 'bubble').setScale(1);
+        this.blast5 = new Bubble(this, this.t5.x, this.t5.y, 'bubble').setScale(1);
+        this.blast6 = new Bubble(this, this.t6.x, this.t6.y, 'bubble').setScale(1);
+        this.blast7 = new Bubble(this, this.t7.x, this.t7.y, 'bubble').setScale(1);
+        this.blast8 = new Bubble(this, this.t8.x, this.t8.y, 'bubble').setScale(1);
+        this.blast9 = new Bubble(this, this.t9.x, this.t9.y, 'bubble').setScale(1);
+        this.blast10 = new Bubble(this, this.t10.x, this.t10.y, 'bubble').setScale(1);
+        this.blast11 = new Bubble(this, this.t11.x, this.t11.y, 'bubble').setScale(1);
+        
+        // collisions
         topLayer.setCollisionByProperty({ collides: true });
-        this.physics.add.collider(this.player, topLayer)
+        this.physics.add.collider(this.player, topLayer);
         this.physics.add.collider(this.blast1, topLayer);
-        //this.physics.add.collider(this.player, this.blast1)
+        this.physics.add.collider(this.blast2, topLayer);
+        this.physics.add.collider(this.blast3, topLayer);
+        this.physics.add.collider(this.blast4, topLayer);
+        this.physics.add.collider(this.blast5, topLayer);
+        this.physics.add.collider(this.blast6, topLayer);
+        this.physics.add.collider(this.blast7, topLayer);
+        this.physics.add.collider(this.blast8, topLayer);
+        this.physics.add.collider(this.blast9, topLayer);
+        this.physics.add.collider(this.blast10, topLayer);
+        this.physics.add.collider(this.blast11, topLayer);
+
         // spikes kill
         topLayer.setTileIndexCallback([13, 14, 15], () => {
             game.settings.gameOver = true;
         });
-        // win transition
-        topLayer.setTileIndexCallback([11], () => { //change tile numbers
-            this.scene.start("secondScene");
+        // win condition
+        topLayer.setTileIndexCallback([16, 17, 22, 23], () => {
+            this.scene.start("victoryScene");
             game.settings.checkpoint = 0;
             game.settings.musicIsOn = false;
             this.music.stop();
@@ -69,6 +102,7 @@ class Second extends Phaser.Scene {
             if (game.settings.playerDied == false) {
                 game.settings.playerDied = true;
                 this.sound.play('deathSound', { volume: 1 });
+                this.player.setAlpha(0);
                 this.player.setGravity(0);
                 this.player.setVelocity(0);
                 this.cameras.main.stopFollow(this.player);
@@ -79,18 +113,8 @@ class Second extends Phaser.Scene {
             // restart level
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 game.settings.gameOver = false;
-                game.settings.checkpointNumber = 0
-                this.scene.start("firstScene");
-                // return to menu
-            } else if (Phaser.Input.Keyboard.JustDown(keyM)) {
-                this.music.stop();
-                game.settings.musicIsOn = false;
-                game.settings.gameOver = false;
-                this.scene.start("menuScene");
-                // resume game
-            } else if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-                game.settings.gameOver = false;
                 game.settings.playerDied = false;
+                this.player.setAlpha(1);
                 this.player.setGravity(0, 250);
                 this.cameras.main.startFollow(this.player);
                 this.backDrop.destroy();
@@ -99,19 +123,86 @@ class Second extends Phaser.Scene {
                 this.endScreenTextBot.destroy();
                 // respawn location
                 if (game.settings.checkpointNumber == 0) {
-                    this.player.x = 555;
-                    this.player.y = 3900;
+                    this.player.x = 1770;
+                    this.player.y = 1910;
                 } else if (game.settings.checkpointNumber == 1) {
-                    this.player.x = 2005;
-                    this.player.y = 3605;
-                } // cp2
+                    this.player.x = 690;
+                    this.player.y = 1880;
+                } else if (game.settings.checkpointNumber == 2) {
+                    this.player.x = 1025;
+                    this.player.y = 600;
+                }
+                // return to menu
+            } else if (Phaser.Input.Keyboard.JustDown(keyM)) {
+                this.music.stop();
+                game.settings.musicIsOn = false;
+                game.settings.gameOver = false;
+                this.scene.start("menuScene");
             }
         }
 
-        // save location
-        if (this.physics.overlap(this.player, this.cp1)) {
-            game.settings.checkpointNumber = 1;
+        // bubble hit check
+        if (this.physics.overlap(this.player, this.blast1)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast2)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast3)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast4)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast5)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast6)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast7)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast8)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast9)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast10)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast11)) {
+            game.settings.gameOver = true;
         }
+        
+        // turret reload
+        if (this.blast1.body.velocity.x == 0) {
+            this.reload(this.t1, this.blast1, 'right');
+        }
+        if (this.blast2.body.velocity.x == 0) {
+            this.reload(this.t2, this.blast2, 'left');
+        }
+        if (this.blast3.body.velocity.x == 0) {
+            this.reload(this.t3, this.blast3, 'right');
+        }
+        if (this.blast4.body.velocity.x == 0) {
+            this.reload(this.t4, this.blast4, 'left');
+        }
+        if (this.blast5.body.velocity.x == 0) {
+            this.reload(this.t5, this.blast5, 'right');
+        }
+        if (this.blast6.body.velocity.x == 0) {
+            this.reload(this.t6, this.blast6, 'left');
+        }
+        if (this.blast7.body.velocity.x == 0) {
+            this.reload(this.t7, this.blast7, 'right');
+        }
+        if (this.blast8.body.velocity.x == 0) {
+            this.reload(this.t8, this.blast8, 'left');
+        }
+        if (this.blast9.body.velocity.x == 0) {
+            this.reload(this.t9, this.blast9, 'right');
+        }
+        if (this.blast10.body.velocity.x == 0) {
+            this.reload(this.t10, this.blast10, 'left');
+        }
+        if (this.blast11.body.velocity.x == 0) {
+            this.reload(this.t11, this.blast11, 'left');
+        }
+
+
+
 
         // player update
         if (game.settings.gameOver == false) {
@@ -122,18 +213,22 @@ class Second extends Phaser.Scene {
             }
         }
 
-        // turrets shooting
-        if (this.physics.overlap(this.player, this.blast1)) {
-            game.settings.gameOver = true;
+        // save location
+        if (this.physics.overlap(this.player, this.cp1)) {
+            game.settings.checkpointNumber = 1;
         }
-        if (this.blast1.body.velocity.x == 0) {
-            this.reload(this.t1, this.blast1, 'right');
+        if (this.physics.overlap(this.player, this.cp2)) {
+            game.settings.checkpointNumber = 2;
         }
 
         // scene skip
         if (Phaser.Input.Keyboard.JustDown(keyONE)) {
             this.scene.start("secondScene");
             game.settings.deathSoundPlayed = false;
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyTWO)) {
+            this.player.x = 2360;
+            this.player.y = 2900;
         }
     }
 
@@ -150,11 +245,15 @@ class Second extends Phaser.Scene {
 
     EndGame() {
         this.backDrop = this.add.tileSprite(this.player.x, this.player.y, 1050, 600, 'blackSquare').setOrigin(0.5).setDepth(2).setAlpha(0.5);
-        this.playerGhost = new Player(this, this.player.x, this.player.y - 15, 'puffer').setScale(5).setOrigin(0.5).setDepth(2);
+        this.playerGhost = new Player(this, this.player.x, this.player.y - 25, 'puffer').setScale(5).setOrigin(0.5).setDepth(2);
         this.playerGhost.anims.play('puffDeath');
         this.playerGhost.setGravity(0);
         this.playerGhost.setVelocity(0);
-        this.endScreenTextTop = this.add.tileSprite(this.player.x, this.player.y - 175, 424, 57, 'endTextTop').setOrigin(0.5).setDepth(2);
-        this.endScreenTextBot = this.add.tileSprite(this.player.x, this.player.y + 175, 363, 95, 'endTextBot').setOrigin(0.5).setDepth(2);
-    }
+        this.endScreenTextTop = this.add.tileSprite(this.player.x, this.player.y - 200, 508, 64, 'endTextTop').setOrigin(0.5).setDepth(2);
+        this.endScreenTextBot = this.add.tileSprite(this.player.x, this.player.y + 200, 384, 95, 'endTextBot').setOrigin(0.5).setDepth(2);
+    }  
 }
+
+
+
+

@@ -4,6 +4,7 @@ class First extends Phaser.Scene {
     }
 
     create() {
+        // reset variables
         game.settings.playerDied = false;
         game.settings.gameOver = false;
         game.settings.checkpoint = 0;
@@ -15,6 +16,7 @@ class First extends Phaser.Scene {
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+        keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
 
         // music
         if (game.settings.musicIsOn == false) {
@@ -36,7 +38,7 @@ class First extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
 
         this.cp1 = new Checkpoint(this, 2005, 3605).setSize(48, 48).setOrigin(1);
-        //this.cp2 = new Checkpoint(this, 2005, 3605).setSize(64, 64).setOrigin(1);
+        this.cp2 = new Checkpoint(this, 2325, 2905).setSize(128, 48).setOrigin(1);
 
         // collisions*overlaps
         topLayer.setCollisionByProperty({ collides: true });
@@ -83,7 +85,6 @@ class First extends Phaser.Scene {
                 this.playerGhost.destroy();
                 this.endScreenTextTop.destroy();
                 this.endScreenTextBot.destroy();
-
                 // respawn location
                 if (game.settings.checkpointNumber == 0) {
                     this.player.x = 555;
@@ -91,20 +92,25 @@ class First extends Phaser.Scene {
                 } else if (game.settings.checkpointNumber == 1) {
                     this.player.x = 2005;
                     this.player.y = 3605;
-                }
+                } else if (game.settings.checkpointNumber == 2) {
+                    this.player.x = 2325;
+                    this.player.y = 2895;
+                } 
             // return to menu
             } else if (Phaser.Input.Keyboard.JustDown(keyM)) {
                 this.music.stop(); 
                 game.settings.musicIsOn = false;
                 game.settings.gameOver = false;
                 this.scene.start("menuScene");
-            // resume game
             }
         }
 
         // save location
         if (this.physics.overlap(this.player, this.cp1)) {
             game.settings.checkpointNumber = 1;
+        }
+        if (this.physics.overlap(this.player, this.cp2)) {
+            game.settings.checkpointNumber = 2;
         }
 
         // player update
@@ -118,8 +124,15 @@ class First extends Phaser.Scene {
 
         // scene skip
         if (Phaser.Input.Keyboard.JustDown(keyONE)) {
-            this.scene.start("secondScene");
             game.settings.deathSoundPlayed = false;
+            game.settings.musicIsOn = false;
+            this.music.stop(); 
+            this.scene.start("secondScene");
+        }
+        // scene skip
+        if (Phaser.Input.Keyboard.JustDown(keyTWO)) {
+            this.player.x = 2360;
+            this.player.y = 2900;
         }
     }
 

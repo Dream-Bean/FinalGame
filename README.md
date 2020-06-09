@@ -91,3 +91,5 @@ Commit #31: Added balances to lvl2. Finished turrets. Did some repositioning. Fi
 Commit #32: Game is done! Fixed up menu and win screens. Also some level updates.
 
 Commit #33: Removed some excess hotkeys and debug features (area/scene skipping). Fixed black border.
+
+Commit #34: Fixed some border coloring. Fixed an asset too.

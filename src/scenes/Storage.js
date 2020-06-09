@@ -28,6 +28,7 @@ class Storage extends Phaser.Scene {
         this.load.image('win', './assets/miscellaneous/win.png');
         this.load.image('thanks', './assets/miscellaneous/thanks.png');
         this.load.image('credits', './assets/miscellaneous/credits.png');
+        this.load.image('return', './assets/miscellaneous/plswork.png');
 
         // sounds
         this.load.audio('bgMusic', './assets/sounds/bgmusic.mp3');

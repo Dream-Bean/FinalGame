@@ -269,16 +269,6 @@ class Second extends Phaser.Scene {
         if (this.physics.overlap(this.player, this.cp3)) {
             game.settings.checkpointNumber = 3;
         }
-
-        // scene skip
-        if (Phaser.Input.Keyboard.JustDown(keyONE)) {
-            this.scene.start("secondScene");
-            game.settings.deathSoundPlayed = false;
-        }
-        if (Phaser.Input.Keyboard.JustDown(keyTWO)) {
-            this.player.x = 1835;
-            this.player.y = 1165;
-        }
     }
 
     reload(turret, bubble, direction) {

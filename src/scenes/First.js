@@ -123,19 +123,6 @@ class First extends Phaser.Scene {
                 this.sound.play('puffSound', { volume: 1 });
             }
         }
-
-        // scene skip
-        if (Phaser.Input.Keyboard.JustDown(keyONE)) {
-            game.settings.deathSoundPlayed = false;
-            game.settings.musicIsOn = false;
-            this.music.stop(); 
-            this.scene.start("secondScene");
-        }
-        // scene skip
-        if (Phaser.Input.Keyboard.JustDown(keyTWO)) {
-            this.player.x = 2360;
-            this.player.y = 2900;
-        }
     }
 
     EndGame() {

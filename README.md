@@ -87,3 +87,5 @@ Commit #30: Implemented most of the turrets. Need a few more, and possibly some 
             and then game is done. Also add parallax to main menu and possibly victory screen?
 
 Commit #31: Added balances to lvl2. Finished turrets. Did some repositioning. Fixed remaining bugs.
+
+Commit #32: Game is done! Fixed up menu and win screens. Also some level updates.

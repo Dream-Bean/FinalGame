@@ -7,7 +7,7 @@ class First extends Phaser.Scene {
         // reset variables
         game.settings.playerDied = false;
         game.settings.gameOver = false;
-        game.settings.checkpoint = 0;
+        game.settings.checkpointNumber = 0;
 
         // define hotkeys
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -34,9 +34,11 @@ class First extends Phaser.Scene {
         this.wpBlack = this.add.tileSprite(-290, -35, 3200, 4608, 'bgBlack1').setOrigin(0);
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
         
+        // player + cam
         this.player = new Player(this, 555, 3900, 'puffer').setSize(16, 16);
         this.cameras.main.startFollow(this.player);
 
+        // checkpoints
         this.cp1 = new Checkpoint(this, 2005, 3605).setSize(48, 48).setOrigin(1);
         this.cp2 = new Checkpoint(this, 2325, 2905).setSize(128, 48).setOrigin(1);
 
@@ -49,10 +51,10 @@ class First extends Phaser.Scene {
         });
         // level transition
         topLayer.setTileIndexCallback([11], () => {
-            this.scene.start("secondScene");
-            game.settings.checkpoint = 0;
+            game.settings.checkpointNumber = 0;
             game.settings.musicIsOn = false;
             this.music.stop();
+            this.scene.start("secondScene");
         });
     }
 

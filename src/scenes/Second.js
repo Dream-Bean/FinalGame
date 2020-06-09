@@ -7,7 +7,7 @@ class Second extends Phaser.Scene {
         // reset variables
         game.settings.playerDied = false;
         game.settings.gameOver = false;
-        game.settings.checkpoint = 0;
+        game.settings.checkpointNumber = 0;
 
         // define hotkeys
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -16,6 +16,7 @@ class Second extends Phaser.Scene {
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+        keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
 
         // music
         if (game.settings.musicIsOn == false) {
@@ -30,16 +31,19 @@ class Second extends Phaser.Scene {
         // layers
         this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg1').setScale(2).setOrigin(0).setScrollFactor(0);
         this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg2').setScale(2).setOrigin(0).setScrollFactor(0);
-        this.wpBlack = this.add.tileSprite(-255, -65, 2560, 2560, 'bgBlack2').setOrigin(0);
+        this.wpBlack = this.add.tileSprite(-255, -46, 2560, 2560, 'bgBlack2').setOrigin(0); //-65
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
+        // player + cam
         this.player = new Player(this, 1770, 1910, 'puffer').setFlipX(true).setSize(16, 16);
         this.cameras.main.startFollow(this.player);
 
+        // checkpoints
         this.cp1 = new Checkpoint(this, 715, 1880).setSize(48, 48).setOrigin(1);
         this.cp2 = new Checkpoint(this, 1037, 600).setSize(112, 48).setOrigin(1);
-        //this.cp3
-
+        this.cp3 = new Checkpoint(this, 1745, 1460).setSize(48, 48).setOrigin(1);
+        
+        // turrets
         this.t1 = new Turret(this, 850, 1795, 'undead').setScale(1).setFlipX(true).setDepth(1);
         this.t2 = new Turret(this, 700, 1575, 'undead').setScale(1).setDepth(1);
         this.t3 = new Turret(this, 400, 1500, 'undead').setScale(1).setFlipX(true).setDepth(1);
@@ -49,9 +53,13 @@ class Second extends Phaser.Scene {
         this.t7 = new Turret(this, 400, 1070, 'undead').setScale(1).setFlipX(true).setDepth(1);
         this.t8 = new Turret(this, 700, 1010, 'undead').setScale(1).setDepth(1);
         this.t9 = new Turret(this, 400, 890, 'undead').setScale(1).setFlipX(true).setDepth(1);
-        this.t10 = new Turret(this, 700, 810, 'undead').setScale(1).setDepth(1);
+        this.t10 = new Turret(this, 760, 810, 'undead').setScale(1).setDepth(1);
         this.t11 = new Turret(this, 700, 690, 'undead').setScale(1).setDepth(1);
+        this.t12 = new Turret(this, 1590, 1445, 'undead').setScale(1).setDepth(1);
+        this.t13 = new Turret(this, 1815, 1370, 'undead').setScale(1).setDepth(1);
+        this.t14 = new Turret(this, 1890, 1045, 'undead').setScale(1).setDepth(1);
 
+        // bubbles
         this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1);
         this.blast2 = new Bubble(this, this.t2.x, this.t2.y, 'bubble').setScale(1);
         this.blast3 = new Bubble(this, this.t3.x, this.t3.y, 'bubble').setScale(1);
@@ -63,10 +71,29 @@ class Second extends Phaser.Scene {
         this.blast9 = new Bubble(this, this.t9.x, this.t9.y, 'bubble').setScale(1);
         this.blast10 = new Bubble(this, this.t10.x, this.t10.y, 'bubble').setScale(1);
         this.blast11 = new Bubble(this, this.t11.x, this.t11.y, 'bubble').setScale(1);
+        this.blast12 = new Bubble(this, this.t12.x, this.t12.y, 'bubble').setScale(1);
+        this.blast13 = new Bubble(this, this.t13.x, this.t13.y, 'bubble').setScale(1);
+        this.blast14 = new Bubble(this, this.t14.x, this.t14.y, 'bubble').setScale(1);
         
         // collisions
         topLayer.setCollisionByProperty({ collides: true });
         this.physics.add.collider(this.player, topLayer);
+            // player + skeleton
+        this.physics.add.collider(this.player, this.t1);
+        this.physics.add.collider(this.player, this.t2);
+        this.physics.add.collider(this.player, this.t3);
+        this.physics.add.collider(this.player, this.t4);
+        this.physics.add.collider(this.player, this.t5);
+        this.physics.add.collider(this.player, this.t6);
+        this.physics.add.collider(this.player, this.t7);
+        this.physics.add.collider(this.player, this.t8);
+        this.physics.add.collider(this.player, this.t9);
+        this.physics.add.collider(this.player, this.t10);
+        this.physics.add.collider(this.player, this.t11);
+        this.physics.add.collider(this.player, this.t12);
+        this.physics.add.collider(this.player, this.t13);
+        this.physics.add.collider(this.player, this.t14);
+            // bubble + layer
         this.physics.add.collider(this.blast1, topLayer);
         this.physics.add.collider(this.blast2, topLayer);
         this.physics.add.collider(this.blast3, topLayer);
@@ -78,6 +105,9 @@ class Second extends Phaser.Scene {
         this.physics.add.collider(this.blast9, topLayer);
         this.physics.add.collider(this.blast10, topLayer);
         this.physics.add.collider(this.blast11, topLayer);
+        this.physics.add.collider(this.blast12, topLayer);
+        this.physics.add.collider(this.blast13, topLayer);
+        this.physics.add.collider(this.blast14, topLayer);
 
         // spikes kill
         topLayer.setTileIndexCallback([13, 14, 15], () => {
@@ -85,10 +115,10 @@ class Second extends Phaser.Scene {
         });
         // win condition
         topLayer.setTileIndexCallback([16, 17, 22, 23], () => {
-            this.scene.start("victoryScene");
-            game.settings.checkpoint = 0;
+            game.settings.checkpointNumber = 0;
             game.settings.musicIsOn = false;
             this.music.stop();
+            this.scene.start("victoryScene");
         });
     }
 
@@ -123,6 +153,7 @@ class Second extends Phaser.Scene {
                 this.endScreenTextBot.destroy();
                 // respawn location
                 if (game.settings.checkpointNumber == 0) {
+                    console.log("bruh wtf");
                     this.player.x = 1770;
                     this.player.y = 1910;
                 } else if (game.settings.checkpointNumber == 1) {
@@ -131,6 +162,9 @@ class Second extends Phaser.Scene {
                 } else if (game.settings.checkpointNumber == 2) {
                     this.player.x = 1025;
                     this.player.y = 600;
+                } else if (game.settings.checkpointNumber == 3) {
+                    this.player.x = 1745;
+                    this.player.y = 1460;
                 }
                 // return to menu
             } else if (Phaser.Input.Keyboard.JustDown(keyM)) {
@@ -163,6 +197,12 @@ class Second extends Phaser.Scene {
         } else if (this.physics.overlap(this.player, this.blast10)) {
             game.settings.gameOver = true;
         } else if (this.physics.overlap(this.player, this.blast11)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast12)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast13)) {
+            game.settings.gameOver = true;
+        } else if (this.physics.overlap(this.player, this.blast14)) {
             game.settings.gameOver = true;
         }
         
@@ -200,9 +240,15 @@ class Second extends Phaser.Scene {
         if (this.blast11.body.velocity.x == 0) {
             this.reload(this.t11, this.blast11, 'left');
         }
-
-
-
+        if (this.blast12.body.velocity.x == 0) {
+            this.reload(this.t12, this.blast12, 'left');
+        }
+        if (this.blast13.body.velocity.x == 0) {
+            this.reload(this.t13, this.blast13, 'left');
+        }
+        if (this.blast14.body.velocity.x == 0) {
+            this.reload(this.t14, this.blast14, 'left');
+        }
 
         // player update
         if (game.settings.gameOver == false) {
@@ -220,6 +266,9 @@ class Second extends Phaser.Scene {
         if (this.physics.overlap(this.player, this.cp2)) {
             game.settings.checkpointNumber = 2;
         }
+        if (this.physics.overlap(this.player, this.cp3)) {
+            game.settings.checkpointNumber = 3;
+        }
 
         // scene skip
         if (Phaser.Input.Keyboard.JustDown(keyONE)) {
@@ -227,8 +276,8 @@ class Second extends Phaser.Scene {
             game.settings.deathSoundPlayed = false;
         }
         if (Phaser.Input.Keyboard.JustDown(keyTWO)) {
-            this.player.x = 2360;
-            this.player.y = 2900;
+            this.player.x = 1835;
+            this.player.y = 1165;
         }
     }
 

@@ -85,3 +85,5 @@ Commit #29: Fixed up menu scene. Tweaked death screen. Added win screen. Patched
 
 Commit #30: Implemented most of the turrets. Need a few more, and possibly some lvl2 map edits,
             and then game is done. Also add parallax to main menu and possibly victory screen?
+
+Commit #31: Added balances to lvl2. Finished turrets. Did some repositioning. Fixed remaining bugs.

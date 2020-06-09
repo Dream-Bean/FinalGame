@@ -12,7 +12,7 @@ class Victory extends Phaser.Scene {
         this.win = this.add.tileSprite(game.config.width / 2, game.config.height / 2 - 125, 410, 65, 'win').setScale(1.5).setOrigin(0.5);
         this.thanks = this.add.tileSprite(game.config.width / 2, game.config.height / 2 + 75, 416, 41, 'thanks').setOrigin(0.5);
         this.credits = this.add.tileSprite(game.config.width / 2, game.config.height / 2 + 250, 712, 30, 'credits').setOrigin(0.5);
-        this.return = this.add.tileSprite(game.config.width / 2, game.config.height / 2 + 125, 393, 50, 'return').setOrigin(0.5);
+        this.return = this.add.tileSprite(game.config.width / 2, game.config.height / 2 + 125, 384, 47, 'menuReturn').setOrigin(0.5);
     }
 
     update() {

@@ -14,9 +14,6 @@ class Second extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
-        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
-        keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
 
         // music
         if (game.settings.musicIsOn == false) {
@@ -31,7 +28,7 @@ class Second extends Phaser.Scene {
         // layers
         this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg1').setScale(2).setOrigin(0).setScrollFactor(0);
         this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg2').setScale(2).setOrigin(0).setScrollFactor(0);
-        this.wpBlack = this.add.tileSprite(-255, -46, 2560, 2560, 'bgBlack2').setOrigin(0); //-65
+        this.wpBlack = this.add.tileSprite(-475, -68, 3000, 2600, 'bgBlack2').setOrigin(0); //-65
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
 
         // player + cam

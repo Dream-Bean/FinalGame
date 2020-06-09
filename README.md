@@ -79,3 +79,6 @@ Commit #26: Added favicon. Map adjustments. basic lvl2 addition. Music integrati
 Commit #27: Added tutorial scene.
 
 Commit #28: Added checkpoints to the game.
+
+Commit #29: Fixed up menu scene. Tweaked death screen. Added win screen. Patched some bugs.
+            Added a ton of assets.

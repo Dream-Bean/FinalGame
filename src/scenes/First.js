@@ -28,27 +28,19 @@ class First extends Phaser.Scene {
         let terrain = map.addTilesetImage("terrain_atlas", "terrain");
         // layers
         this.wpBot = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg1').setScale(2).setOrigin(0).setScrollFactor(0);
-        this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg2').setScale(2.2).setOrigin(0).setScrollFactor(0);
-        this.wpBlack = this.add.tileSprite(-290, -35, 3200, 4608, 'bgBlack').setOrigin(0);
+        this.wpTop = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg2').setScale(2).setOrigin(0).setScrollFactor(0);
+        this.wpBlack = this.add.tileSprite(-290, -35, 3200, 4608, 'bgBlack1').setOrigin(0);
         let topLayer = map.createStaticLayer("top", [terrain], 0, 0);
         
         this.player = new Player(this, 555, 3900, 'puffer').setSize(16, 16);
         this.cameras.main.startFollow(this.player);
 
-
         this.cp1 = new Checkpoint(this, 2005, 3605).setSize(48, 48).setOrigin(1);
         //this.cp2 = new Checkpoint(this, 2005, 3605).setSize(64, 64).setOrigin(1);
-
-
-        //this.t1 = new Turret(this, 1795, 3555, 'undead').setScale(1).setDepth(1);
-        //this.blast1 = new Bubble(this, this.t1.x, this.t1.y, 'bubble').setScale(1);
-
 
         // collisions*overlaps
         topLayer.setCollisionByProperty({ collides: true });
         this.physics.add.collider(this.player, topLayer)
-        //this.physics.add.collider(this.blast1, topLayer);
-        //this.physics.add.collider(this.player, this.blast1)
         // spikes kill
         topLayer.setTileIndexCallback([13, 14, 15], () => {
             game.settings.gameOver = true;
@@ -72,6 +64,7 @@ class First extends Phaser.Scene {
             if (game.settings.playerDied == false) {
                 game.settings.playerDied = true;
                 this.sound.play('deathSound', { volume: 1 });
+                this.player.setAlpha(0);
                 this.player.setGravity(0);
                 this.player.setVelocity(0);
                 this.cameras.main.stopFollow(this.player);
@@ -82,18 +75,8 @@ class First extends Phaser.Scene {
             // restart level
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 game.settings.gameOver = false;
-                game.settings.checkpointNumber = 0
-                this.scene.start("firstScene");
-            // return to menu
-            } else if (Phaser.Input.Keyboard.JustDown(keyM)) {
-                this.music.stop(); 
-                game.settings.musicIsOn = false;
-                game.settings.gameOver = false;
-                this.scene.start("menuScene");
-            // resume game
-            } else if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-                game.settings.gameOver = false;
                 game.settings.playerDied = false;
+                this.player.setAlpha(1);
                 this.player.setGravity(0, 250);
                 this.cameras.main.startFollow(this.player);
                 this.backDrop.destroy();
@@ -109,6 +92,13 @@ class First extends Phaser.Scene {
                     this.player.x = 2005;
                     this.player.y = 3605;
                 }
+            // return to menu
+            } else if (Phaser.Input.Keyboard.JustDown(keyM)) {
+                this.music.stop(); 
+                game.settings.musicIsOn = false;
+                game.settings.gameOver = false;
+                this.scene.start("menuScene");
+            // resume game
             }
         }
 
@@ -126,18 +116,6 @@ class First extends Phaser.Scene {
             }
         }
 
-        /*
-        // turrets shooting
-        if (this.physics.overlap(this.player, this.blast1)) {
-            game.settings.gameOver = true;
-        }
-        if (this.blast1.body.velocity.x == 0) {
-            this.reload(this.t1, this.blast1, 'left');
-        }
-        */
-
-
-
         // scene skip
         if (Phaser.Input.Keyboard.JustDown(keyONE)) {
             this.scene.start("secondScene");
@@ -145,25 +123,13 @@ class First extends Phaser.Scene {
         }
     }
 
-    reload(turret, bubble, direction) {
-        // add direction with a left/right param?
-        bubble.x = turret.x;
-        bubble.y = turret.y;
-        if (direction == 'left') {
-            bubble.setVelocityX(-100);
-        } else if (direction == 'right') {
-            bubble.setVelocityX(100);
-        }
-        turret.anims.play('skeleBlast');
-    }
-
     EndGame() {
         this.backDrop = this.add.tileSprite(this.player.x, this.player.y, 1050, 600, 'blackSquare').setOrigin(0.5).setDepth(2).setAlpha(0.5);
-        this.playerGhost = new Player(this, this.player.x, this.player.y - 15, 'puffer').setScale(5).setOrigin(0.5).setDepth(2);
+        this.playerGhost = new Player(this, this.player.x, this.player.y - 25, 'puffer').setScale(5).setOrigin(0.5).setDepth(2);
         this.playerGhost.anims.play('puffDeath');
         this.playerGhost.setGravity(0);
         this.playerGhost.setVelocity(0);
-        this.endScreenTextTop = this.add.tileSprite(this.player.x, this.player.y - 175, 424, 57, 'endTextTop').setOrigin(0.5).setDepth(2);
-        this.endScreenTextBot = this.add.tileSprite(this.player.x, this.player.y + 175, 363, 95, 'endTextBot').setOrigin(0.5).setDepth(2);
+        this.endScreenTextTop = this.add.tileSprite(this.player.x, this.player.y - 200, 508, 64, 'endTextTop').setOrigin(0.5).setDepth(2);
+        this.endScreenTextBot = this.add.tileSprite(this.player.x, this.player.y + 200, 384, 95, 'endTextBot').setOrigin(0.5).setDepth(2);
     }
 }

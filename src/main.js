@@ -18,7 +18,7 @@ let config = {
         target: 60,
         forceSetTimeOut: true,
     },
-    scene: [Storage, Menu, Tutorial, First, Second],
+    scene: [Storage, Menu, Tutorial, First, Second, Victory],
 }
 let game = new Phaser.Game(config);
 
@@ -30,10 +30,8 @@ game.settings = {
     musicIsOn: false,
     playerVelocityY: 100,
     playerVelocityX: 150,
-    isBubbleTimer1: false,
-    isBubbleTimer2: false,
     checkpointNumber: 0,
 }
 
 // reserve keyboard variables
-let keyA, keyD, keyR, keyM, keyT, keySPACE, keyONE;
+let keyA, keyD, keyR, keyM, keyT, keyP, keySPACE, keyONE;

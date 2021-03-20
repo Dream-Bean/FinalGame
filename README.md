@@ -1,5 +1,8 @@
-Game Name: Puffed Up
-Date Completed: 6/11/2020
+## Puffed Up
+### A pufferfish navigates through a dangerous environment in search of treasure.
 
-Programmer & Project Manager: Alexander Shaham
+Programmer & Project Manager: Alexander Shaham  
 Artists: Brandon Leoung and Terence So
+
+Coded in JavaScript, using Phaser3 framework.  
+Used Tile for map making.

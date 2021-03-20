@@ -1,4 +1,4 @@
-Game Name: Popped
+Game Name: Puffed Up
 Date Completed: 6/11/2020
 
 Programmer & Project Manager: Alexander Shaham
